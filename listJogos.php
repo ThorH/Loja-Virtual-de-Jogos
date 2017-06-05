@@ -31,8 +31,8 @@
 	    			<tr>
 	    				<th>Nome</th>
 	    				<th>Categoria</th>
-	    				<th>Descrição</th>
-	    				<th>Preço</th>
+	    				<th>DescriÃ§Ã£o</th>
+	    				<th>PreÃ§o</th>
 	    				<th>Gerenciar</th>
 	    			</tr>
 	    		</thead>
@@ -40,7 +40,7 @@
 		    			<tr>
 		    				<td class="jogoName">Dark Souls</td>
 		    				<td class="jogoCategory">Adventure RPG</td>
-		    				<td class="jogoDescription">Só morre</td>
+		    				<td class="jogoDescription">SÃ³ morre</td>
 		    				<td class="jogoPrice">10,00</td>
 		    				<td>
 		    					<a href="#editModal" type="button" class="btn btn-sm btn-warning btnEdit">Editar</a>
@@ -51,7 +51,7 @@
 		    			<tr>
 		    				<td class="jogoName">Dark Souls II</td>
 		    				<td class="jogoCategory">Adventure RPG</td>
-		    				<td class="jogoDescription">Só morre</td>
+		    				<td class="jogoDescription">SÃ³ morre</td>
 		    				<td class="jogoPrice">10,00</td>
 		    				<td>
 		    					<a href="#editModal" type="button" class="btn btn-sm btn-warning btnEdit">Editar</a>
@@ -96,18 +96,18 @@
 				
 						<!-- Text input-->
 						<div class="form-group">
-							<label class="col-md-12">Descrição</label>  
+							<label class="col-md-12">DescriÃ§Ã£o</label>  
 							<div class="col-md-12 inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
-									<input name="jogoDescription" placeholder="Descrição do jogo" class="form-control" type="text">
+									<input name="jogoDescription" placeholder="DescriÃ§Ã£o do jogo" class="form-control" type="text">
 								</div>
 							</div>
 						</div>
 						
 						<!-- Text input-->
 						<div class="form-group">
-							<label class="col-md-12">Preço</label>  
+							<label class="col-md-12">PreÃ§o</label>  
 							<div class="col-md-12 inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
@@ -133,7 +133,7 @@
 				<h2>Deseja deletar este jogo?</h2>
 				<p class="deleteJogo"></p>
 				<br>
-				<button data-remodal-action="cancel" class="remodal-cancel">Não</button>
+				<button data-remodal-action="cancel" class="remodal-cancel">NÃ£o</button>
 				<button data-remodal-action="confirm" class="remodal-confirm">Sim</button>
 			</div>
 	
@@ -163,7 +163,7 @@
 			            jogoName: {
 			                validators: {
 			                        stringLength: {
-		                        	message: 'O nome deve conter no mínimo 2 caracteres.',
+		                        	message: 'O nome deve conter no mÃ­nimo 2 caracteres.',
 			                        min: 2,
 			                    },
 			                        notEmpty: {
@@ -181,10 +181,10 @@
 			            jogoDescription: {
 			                validators: {
 			                    notEmpty: {
-			                        message: 'Preencha a descrição do jogo.'
+			                        message: 'Preencha a descriÃ§Ã£o do jogo.'
 			                    },
 			                    stringLength: {
-		                        	message: 'A descrição deve conter no mínimo 2 caracteres.',
+		                        	message: 'A descriÃ§Ã£o deve conter no mÃ­nimo 2 caracteres.',
 			                        min: 2
 			                    }
 			                }
@@ -192,7 +192,7 @@
 			            jogoPrice: {
 			            	validators: {
 			            		notEmpty: {
-			            			message: 'Preencha o preço do jogo.'
+			            			message: 'Preencha o preÃ§o do jogo.'
 			            		}
 			            	}
 			            }
