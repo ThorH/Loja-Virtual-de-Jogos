@@ -2,7 +2,7 @@
 
 <html lang="pt-br">
 	<head>
-	    <meta http-equiv="content-Type" content="text/html; charset=iso-8859-1">
+	    <meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <meta name="description" content="Loja de Jogos.">
@@ -26,6 +26,10 @@
 	    <!-- Page Content -->
 	    <div class="container dataTable">
 	    
+	    	<a class="btn btn-success btnCreate" href="#editModal">Adicionar</a>
+	    	<br>
+	    	<br>
+
 	    	<table id="usuarios" class="table table-striped table-bordered">
 	    		<thead>
 	    			<tr>
@@ -202,6 +206,12 @@
 	    			"language": {
 	    				"url": "json/Portuguese-Brasil.json"
 	    			}
+	    		});
+
+	    		$(".btnCreate").click(function(){
+	    			$("input[name='userName']").val("");
+	    			$("input[name='userEmail']").val("");
+	    			$("input[name='userPassword']").val("");
 	    		});
 	    		
 	    		$(".btnEdit").click(function(){

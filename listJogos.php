@@ -2,7 +2,7 @@
 
 <html lang="pt-br">
 	<head>
-	    <meta http-equiv="content-Type" content="text/html; charset=iso-8859-1">
+	    <meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <meta name="description" content="Loja de Jogos.">
@@ -25,6 +25,10 @@
 
 	    <!-- Page Content -->
 	    <div class="container dataTable">
+
+	    	<a class="btn btn-success btnCreate" href="#editModal">Adicionar</a>
+	    	<br>
+	    	<br>
 	    
 	    	<table id="jogos" class="table table-striped table-bordered">
 	    		<thead>
@@ -112,6 +116,16 @@
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
 									<input id="jogoPrice" name="jogoPrice" placeholder="10,00" class="form-control" type="text">
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-12">Imagem</label>  
+							<div class="col-md-12 inputGroupContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-picture-o" aria-hidden="true"></i></span>
+									<input id="jogoImage" name="jogoImage" class="form-control" type="file">
 								</div>
 							</div>
 						</div>
@@ -227,6 +241,13 @@
 	    		});
 
 	    		$("#jogoPrice").mask("00.000,00", {reverse: true});
+
+	    		$(".btnCreate").click(function(){
+	    			$("input[name='jogoName']").val("");
+	    			$("option[value=' ']").attr("selected", "selected");
+	    			$("input[name='jogoDescription']").val("");
+	    			$("input[name='jogoPrice']").val("");
+	    		});
 	    		
 	    		$(".btnEdit").click(function(){
 	    			var $item = $(this).closest("tr");
