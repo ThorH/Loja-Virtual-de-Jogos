@@ -26,13 +26,13 @@
 	    <!-- Page Content -->
 	    <div class="container dataTable">
 	    
-	    	<table id="jogos" class="table table-striped table-bordered">
+	    	<table id="alunos" class="table table-striped table-bordered">
 	    		<thead>
 	    			<tr>
 	    				<th>Nome</th>
 	    				<th>Categoria</th>
-	    				<th>DescriÁ„o</th>
-	    				<th>PreÁo</th>
+	    				<th>Descri√ß√£o</th>
+	    				<th>Pre√ßo</th>
 	    				<th>Gerenciar</th>
 	    			</tr>
 	    		</thead>
@@ -40,7 +40,7 @@
 		    			<tr>
 		    				<td class="jogoName">Dark Souls</td>
 		    				<td class="jogoCategory">Adventure RPG</td>
-		    				<td class="jogoDescription">SÛ morre</td>
+		    				<td class="jogoDescription">S√≥ morre</td>
 		    				<td class="jogoPrice">10,00</td>
 		    				<td>
 		    					<a href="#editModal" type="button" class="btn btn-sm btn-warning btnEdit">Editar</a>
@@ -51,7 +51,7 @@
 		    			<tr>
 		    				<td class="jogoName">Dark Souls II</td>
 		    				<td class="jogoCategory">Adventure RPG</td>
-		    				<td class="jogoDescription">SÛ morre</td>
+		    				<td class="jogoDescription">S√≥ morre</td>
 		    				<td class="jogoPrice">10,00</td>
 		    				<td>
 		    					<a href="#editModal" type="button" class="btn btn-sm btn-warning btnEdit">Editar</a>
@@ -75,7 +75,7 @@
 						<div class="col-md-12 center-block text-center pagination-centered inputGroupContainer">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-gamepad" aria-hidden="true"></i></span>
-								<input name="jogoName" placeholder="Nome do jogo" class="form-control" type="text">
+								<input name="firstName" placeholder="Nome do jogo" class="form-control" type="text">
 							</div>
 						</div>
 					</div>
@@ -86,9 +86,9 @@
 						<div class="col-md-12 selectContainer">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-list-alt" aria-hidden="true"></i></span>
-								<select name="jogoCategory" class="form-control selectpicker" >
-									<option value=" ">Selecione a Categoria</option>
-									<option value="Adventure RPG">Alabama</option>
+								<select name="library" class="form-control selectpicker" >
+									<option value=" " >Selecione a Categoria</option>
+									<option value="Alabama">Alabama</option>
 									<option value="Alaska">Alaska</option>
 								</select>
 							</div>
@@ -97,22 +97,22 @@
 			
 					<!-- Text input-->
 					<div class="form-group">
-						<label class="col-md-12">DescriÁ„o</label>  
+						<label class="col-md-12">Descri√ß√£o</label>  
 						<div class="col-md-12 inputGroupContainer">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
-								<input name="jogoDescription" placeholder="DescriÁ„o do jogo" class="form-control" type="text">
+								<input name="email" placeholder="Descri√ß√£o do jogo" class="form-control" type="text">
 							</div>
 						</div>
 					</div>
 					
 					<!-- Text input-->
 					<div class="form-group">
-						<label class="col-md-12">PreÁo</label>  
+						<label class="col-md-12">Pre√ßo</label>  
 						<div class="col-md-12 inputGroupContainer">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
-								<input id="jogoPrice" name="jogoPrice" placeholder="10,00" class="form-control" type="text">
+								<input id="endereco" name="endereco" placeholder="10,00" class="form-control" type="text">
 							</div>
 						</div>
 					</div>
@@ -133,9 +133,9 @@
 			<div class="remodal" data-remodal-id="deleteModal">
 				<button data-remodal-action="close" class="remodal-close"></button>
 				<h2>Deseja deletar este jogo?</h2>
-				<p class="deleteJogo"></p>
+				<p class="deleteStudent"></p>
 				<br>
-				<button data-remodal-action="cancel" class="remodal-cancel">N„o</button>
+				<button data-remodal-action="cancel" class="remodal-cancel">N√£o</button>
 				<button data-remodal-action="confirm" class="remodal-confirm">Sim</button>
 			</div>
 	
@@ -162,39 +162,42 @@
 			            validating: 'glyphicon glyphicon-refresh'
 			        },
 			        fields: {
-			            jogoName: {
+			            firstName: {
 			                validators: {
 			                        stringLength: {
-		                        	message: 'O nome deve conter no mÌnimo 2 caracteres.',
+		                        	message: 'O nome deve conter no m√≠nimo 2 caracteres.',
 			                        min: 2,
 			                    },
 			                        notEmpty: {
-			                        message: 'Preencha o nome do jogo.'
+			                        message: 'Preencha o nome do aluno.'
 			                    }
 			                }
 			            },
-			            jogoCategory: {
+			             lastName: {
 			                validators: {
-			                     notEmpty: {
-			                    	message: 'Selecione a categoria do jogo.'
+			                     stringLength: {
+			                    	message: 'O sobrenome deve conter no m√≠nimo 2 caracteres.',
+			                        min: 2,
+			                    },
+			                    notEmpty: {
+			                        message: 'Preencha o sobrenome do aluno.'
 			                    }
 			                }
 			            },
-			            jogoDescription: {
+			            email: {
 			                validators: {
 			                    notEmpty: {
-			                        message: 'Preencha a descriÁ„o do jogo.'
+			                        message: 'Preencha o e-mail do aluno.'
 			                    },
-			                    stringLength: {
-		                        	message: 'A descriÁ„o deve conter no mÌnimo 2 caracteres.',
-			                        min: 2
+			                    emailAddress: {
+			                        message: 'Este endere√ßo de e-mail est√° inv√°lido.'
 			                    }
 			                }
 			            },
-			            jogoPrice: {
+			            endereco: {
 			            	validators: {
 			            		notEmpty: {
-			            			message: 'Preencha o preÁo do jogo.'
+			            			message: 'Preencha o endere√ßo do aluno.'
 			            		}
 			            	}
 			            }
@@ -222,31 +225,32 @@
 		</script>
 	    <script>
 	    	$(document).ready(function(){
-	    		$("#jogos").DataTable({
+	    		$("#alunos").DataTable({
 	    			"language": {
 	    				"url": "json/Portuguese-Brasil.json"
 	    			}
 	    		});
 
-	    		$("#jogoPrice").mask("00.000,00", {reverse: true});
+	    		$("#endereco").mask("00.000,00", {reverse: true});
 	    		
 	    		$(".btnEdit").click(function(){
 	    			var $item = $(this).closest("tr");
-	    			var jogoName = $($item).find(".jogoName").html();
-	    			var jogoCategory = $($item).find(".jogoCategory").html();
-	    			var jogoDescription = $($item).find(".jogoDescription").html();
-	    			var jogoPrice = $($item).find(".jogoPrice").html();
+	    			var studentName = $($item).find(".studentName").html();
+	    			var studentLastName = $($item).find(".studentLastName").html();
+	    			var studentEmail = $($item).find(".studentEmail").html();
+	    			var studentAddress = $($item).find(".studentAddress").html();
 	    			
-	    			$("input[name='jogoName']").val(jogoName);
-	    			$("option[value='"+jogoCategory+"']").attr("selected", "selected");
-	    			$("input[name='jogoDescription']").val(jogoDescription);
-	    			$("input[name='jogoPrice']").val(jogoPrice);
+	    			$("input[name='firstName']").val(studentName);
+	    			$("input[name='lastName']").val(studentLastName);
+	    			$("input[name='email']").val(studentEmail);
+	    			$("input[name='endereco']").val(studentAddress);
 	    		});
 	    		
 	    		$(".btnDelete").click(function(){
 	    			var $item = $(this).closest("tr");
-	    			var jogoName = $($item).find(".jogoName").html();
-	    			$(".deleteJogo").empty().append(jogoName);
+	    			var studentName = $($item).find(".studentName").html();
+	    			var studentLastName = $($item).find(".studentLastName").html();
+	    			$(".deleteStudent").empty().append(studentName + " " + studentLastName);
 	    		});
 	    	});
 	    </script>
