@@ -11,5 +11,6 @@ create table jogos (
 	jogoName varchar(100) not null,
 	jogoCategory varchar(100) not null,
 	jogoDescription varchar(100) not null,
-	jogoPrice decimal(10,2) not null
+	jogoPrice decimal(10,2) not null,
+	jogoImage varchar(100)
 );

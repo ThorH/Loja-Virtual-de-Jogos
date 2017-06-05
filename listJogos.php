@@ -65,65 +65,63 @@
 				<button data-remodal-action="close" class="remodal-close"></button>
 				<form class="well form-horizontal" method="post" id="registerForm">
 					<fieldset>
-			
-					<!-- Form Name -->
-					<legend class="text-center">Editar Jogo</legend>
-			
-					<!-- Text input-->
-					<div class="form-group">
-						<label class="col-md-12">Nome</label>  
-						<div class="col-md-12 center-block text-center pagination-centered inputGroupContainer">
-							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-gamepad" aria-hidden="true"></i></span>
-								<input name="jogoName" placeholder="Nome do jogo" class="form-control" type="text">
+						<!-- Form Name -->
+						<legend class="text-center">Editar Jogo</legend>
+				
+						<!-- Text input-->
+						<div class="form-group">
+							<label class="col-md-12">Nome</label>  
+							<div class="col-md-12 center-block text-center pagination-centered inputGroupContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-gamepad" aria-hidden="true"></i></span>
+									<input name="jogoName" placeholder="Nome do jogo" class="form-control" type="text">
+								</div>
 							</div>
 						</div>
-					</div>
-			
-					<!-- Text input-->
-					<div class="form-group"> 
-						<label class="col-md-12">Categoria</label>
-						<div class="col-md-12 selectContainer">
-							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-list-alt" aria-hidden="true"></i></span>
-								<select name="jogoCategory" class="form-control selectpicker" >
-									<option value=" ">Selecione a Categoria</option>
-									<option value="Adventure RPG">Alabama</option>
-									<option value="Alaska">Alaska</option>
-								</select>
+				
+						<!-- Text input-->
+						<div class="form-group"> 
+							<label class="col-md-12">Categoria</label>
+							<div class="col-md-12 selectContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-list-alt" aria-hidden="true"></i></span>
+									<select name="jogoCategory" class="form-control selectpicker" >
+										<option value=" ">Selecione a Categoria</option>
+										<option value="Adventure RPG">Alabama</option>
+										<option value="Alaska">Alaska</option>
+									</select>
+								</div>
 							</div>
 						</div>
-					</div>
-			
-					<!-- Text input-->
-					<div class="form-group">
-						<label class="col-md-12">Descrição</label>  
-						<div class="col-md-12 inputGroupContainer">
-							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
-								<input name="jogoDescription" placeholder="Descrição do jogo" class="form-control" type="text">
+				
+						<!-- Text input-->
+						<div class="form-group">
+							<label class="col-md-12">Descrição</label>  
+							<div class="col-md-12 inputGroupContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+									<input name="jogoDescription" placeholder="Descrição do jogo" class="form-control" type="text">
+								</div>
 							</div>
 						</div>
-					</div>
-					
-					<!-- Text input-->
-					<div class="form-group">
-						<label class="col-md-12">Preço</label>  
-						<div class="col-md-12 inputGroupContainer">
-							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
-								<input id="jogoPrice" name="jogoPrice" placeholder="10,00" class="form-control" type="text">
+						
+						<!-- Text input-->
+						<div class="form-group">
+							<label class="col-md-12">Preço</label>  
+							<div class="col-md-12 inputGroupContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+									<input id="jogoPrice" name="jogoPrice" placeholder="10,00" class="form-control" type="text">
+								</div>
 							</div>
 						</div>
-					</div>
-			
-					<!-- Button -->
-					<div class="form-group">
-						<div class="col-md-12">
-							<button type="submit" class="btn btn-warning">Enviar <span class="glyphicon glyphicon-send"></span></button>
+				
+						<!-- Button -->
+						<div class="form-group">
+							<div class="col-md-12">
+								<button type="submit" class="btn btn-warning">Enviar <span class="glyphicon glyphicon-send"></span></button>
+							</div>
 						</div>
-					</div>
-					
 					</fieldset>
 				</form>
 				<br>
