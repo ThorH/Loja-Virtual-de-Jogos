@@ -27,7 +27,7 @@
 
 	    <!-- Navigation -->
 	    <?php
-	    	include "includes/adminNavigation.php";
+	    	include("includes/adminNavigation.php");
 	    ?>
 
 	    <!-- Page Content -->
@@ -130,7 +130,7 @@
 	
 	        <!-- Footer -->
 	    <?php
-	    	include "includes/footer.php";
+	    	include("includes/footer.php");
 	    ?>
 		
 	    </div>
