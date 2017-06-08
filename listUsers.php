@@ -1,3 +1,10 @@
+<?php
+	include('includes/dbconnect.php');
+	$consulta = $conexao->prepare("SELECT * FROM usuarios");
+	$consulta->execute();
+	$registros = $consulta->fetchAll();
+?>
+
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -17,7 +24,7 @@
 	</head>
 
 	<body>
-	
+
 	    <!-- Navigation -->
 	    <?php
 	    	include "includes/adminNavigation.php";
@@ -40,25 +47,20 @@
 	    			</tr>
 	    		</thead>
 	    		<tbody>
-		    			<tr>
-		    				<td class="userName">Victor</td>
-		    				<td class="userEmail">victor@victor.com</td>
-		    				<td class="userPassword">123</td>
-		    				<td>
-		    					<a href="#editModal" type="button" class="btn btn-sm btn-warning btnEdit">Editar</a>
-		    					<a href="#deleteModal" type="button" class="btn btn-sm btn-danger btnDelete">Deletar</a>
-		    				</td>
-		    			</tr>
-
-		    			<tr>
-		    				<td class="userName">Thor</td>
-		    				<td class="userEmail">thor@thor.com</td>
-		    				<td class="userPassword">321</td>
-		    				<td>
-		    					<a href="#editModal" type="button" class="btn btn-sm btn-warning btnEdit">Editar</a>
-		    					<a href="#deleteModal" type="button" class="btn btn-sm btn-danger btnDelete">Deletar</a>
-		    				</td>
-		    			</tr>
+	    			<?php  
+	    				foreach ($registros as $key => $value) 
+	    				{
+	    					echo "<tr>
+	    							<td class='userName' data-id='".$value['userID']."'>".$value['userName']."</td>
+	    							<td class='userEmail'>".$value['userEmail']."</td>
+	    							<td class='userPassword'>".$value['userPassword']."</td>
+	    							<td>
+	    								<a href='#editModal' type='button' class='btn btn-sm btn-warning btnEdit'>Editar</a>
+	    								<a href='#deleteModal' type='button' class='btn btn-sm btn-danger btnDelete'>Deletar</a>
+	    							</td>
+    							</tr>";
+	    				}
+	    			?>
 	    		</tbody>
 	    	</table>
 	    	
@@ -67,7 +69,10 @@
 				<form class="well form-horizontal" method="post" id="registerForm">
 					<fieldset>
 						<!-- Form Name -->
-						<legend class="text-center">Editar Usuário</legend>
+						<legend id="modalTitle" class="text-center">Editar Usuário</legend>
+
+						<!-- Hidden ID-->
+						<input type="hidden" name="userID" value="">
 				
 						<!-- Text input-->
 						<div class="form-group">
@@ -86,7 +91,7 @@
 							<div class="col-md-12 center-block text-center pagination-centered inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-									<input name="userEmail" placeholder="Nome do jogo" class="form-control" type="text">
+									<input name="userEmail" placeholder="E-mail do usuário" class="form-control" type="text">
 								</div>
 							</div>
 						</div>
@@ -97,11 +102,11 @@
 							<div class="col-md-12 inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
-									<input name="userPassword" placeholder="Descrição do jogo" class="form-control" type="text">
+									<input name="userPassword" placeholder="Senha do usuário" class="form-control" type="text">
 								</div>
 							</div>
 						</div>
-				
+
 						<!-- Button -->
 						<div class="form-group">
 							<div class="col-md-12">
@@ -209,17 +214,21 @@
 	    		});
 
 	    		$(".btnCreate").click(function(){
+	    			$("#modalTitle").text("Criar Usuário");
 	    			$("input[name='userName']").val("");
 	    			$("input[name='userEmail']").val("");
 	    			$("input[name='userPassword']").val("");
 	    		});
 	    		
 	    		$(".btnEdit").click(function(){
+					$("#modalTitle").text("Editar Usuário");
 	    			var $item = $(this).closest("tr");
 	    			var userName = $($item).find(".userName").html();
 	    			var userEmail = $($item).find(".userEmail").html();
 	    			var userPassword = $($item).find(".userPassword").html();
+	    			var jogoID = $($item).find(".userName").data("id");
 	    			
+	    			$("input[name='userID']").val(jogoID);
 	    			$("input[name='userName']").val(userName);
 	    			$("input[name='userEmail']").val(userEmail);
 	    			$("input[name='userPassword']").val(userPassword);

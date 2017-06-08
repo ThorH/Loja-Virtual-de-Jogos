@@ -1,3 +1,10 @@
+<?php
+	include('includes/dbconnect.php');
+	$consulta = $conexao->prepare("SELECT * FROM jogos");
+	$consulta->execute();
+	$registros = $consulta->fetchAll();
+?>
+
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -41,27 +48,21 @@
 	    			</tr>
 	    		</thead>
 	    		<tbody>
-		    			<tr>
-		    				<td class="jogoName">Dark Souls</td>
-		    				<td class="jogoCategory">Adventure RPG</td>
-		    				<td class="jogoDescription">Só morre</td>
-		    				<td class="jogoPrice">10,00</td>
-		    				<td>
-		    					<a href="#editModal" type="button" class="btn btn-sm btn-warning btnEdit">Editar</a>
-		    					<a href="#deleteModal" type="button" class="btn btn-sm btn-danger btnDelete">Deletar</a>
-		    				</td>
-		    			</tr>
-
-		    			<tr>
-		    				<td class="jogoName">Dark Souls II</td>
-		    				<td class="jogoCategory">Adventure RPG</td>
-		    				<td class="jogoDescription">Só morre</td>
-		    				<td class="jogoPrice">10,00</td>
-		    				<td>
-		    					<a href="#editModal" type="button" class="btn btn-sm btn-warning btnEdit">Editar</a>
-		    					<a href="#deleteModal" type="button" class="btn btn-sm btn-danger btnDelete">Deletar</a>
-		    				</td>
-		    			</tr>
+	    			<?php
+	    				foreach ($registros as $key => $value) 
+	    				{
+		    				echo "<tr>
+				    				<td class='jogoName' data-id='".$value['jogoID']."'>".$value['jogoName']."</td>
+				    				<td class='jogoCategory'>".$value['jogoCategory']."</td>
+				    				<td class='jogoDescription'>".$value['jogoDescription']."</td>
+				    				<td class='jogoPrice'>".$value['jogoPrice']."</td>
+				    				<td>
+				    					<a href='#editModal' type='button' class='btn btn-sm btn-warning btnEdit'>Editar</a>
+				    					<a href='#deleteModal' type='button' class='btn btn-sm btn-danger btnDelete'>Deletar</a>
+				    				</td>
+				    			</tr>";
+	    				}
+	    			?>
 	    		</tbody>
 	    	</table>
 	    	
@@ -70,7 +71,10 @@
 				<form class="well form-horizontal" method="post" id="registerForm">
 					<fieldset>
 						<!-- Form Name -->
-						<legend class="text-center">Editar Jogo</legend>
+						<legend id="modalTitle" class="text-center">Editar Jogo</legend>
+
+						<!-- Hidden ID-->
+						<input type="hidden" name="jogoID" value="">
 				
 						<!-- Text input-->
 						<div class="form-group">
@@ -243,6 +247,8 @@
 	    		$("#jogoPrice").mask("00.000,00", {reverse: true});
 
 	    		$(".btnCreate").click(function(){
+	    			$("#modalTitle").text("Criar Jogo");
+	    			$("input[name='jogoID']").val("");
 	    			$("input[name='jogoName']").val("");
 	    			$("option[value=' ']").attr("selected", "selected");
 	    			$("input[name='jogoDescription']").val("");
@@ -250,12 +256,15 @@
 	    		});
 	    		
 	    		$(".btnEdit").click(function(){
+	    			$("#modalTitle").text("Editar Jogo");
 	    			var $item = $(this).closest("tr");
 	    			var jogoName = $($item).find(".jogoName").html();
 	    			var jogoCategory = $($item).find(".jogoCategory").html();
 	    			var jogoDescription = $($item).find(".jogoDescription").html();
 	    			var jogoPrice = $($item).find(".jogoPrice").html();
-	    			
+	    			var jogoID = $($item).find(".jogoName").data("id");
+
+	    			$("input[name='jogoID']").val(jogoID);
 	    			$("input[name='jogoName']").val(jogoName);
 	    			$("option[value='"+jogoCategory+"']").attr("selected", "selected");
 	    			$("input[name='jogoDescription']").val(jogoDescription);
