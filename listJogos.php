@@ -1,10 +1,3 @@
-<?php
-	include('includes/dbconnect.php');
-	$consulta = $conexao->prepare("SELECT * FROM jogos");
-	$consulta->execute();
-	$registros = $consulta->fetchAll();
-?>
-
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -23,6 +16,61 @@
 	    <link rel="icon" href="images/favicon.png" type="image/x-icon" />
 	</head>
 
+	<?php
+		include('includes/dbconnect.php');
+
+		if (isset($_POST["jogoName"]))
+		{
+			$consulta = $conexao->prepare("INSERT INTO jogos (jogoName, jogoCategory, jogoDescription, jogoPrice) VALUES (?,?,?,?)");
+			$jogoName = $_POST["jogoName"];
+			$jogoCategory = $_POST["jogoCategory"];
+			$jogoDescription = $_POST["jogoDescription"];
+			$jogoPrice = $_POST["jogoPrice"];
+			$jogoPrice = str_replace(",", ".", $jogoPrice);
+			//$jogoImage = $_POST["jogoImage"];
+
+			//debug remover dps
+			echo $jogoName."<br>";
+			echo $jogoCategory."<br>";
+			echo $jogoDescription."<br>";
+			echo $jogoPrice."<br>";
+
+			$consulta->execute(array($jogoName, $jogoCategory, $jogoDescription, $jogoPrice));
+			$resultado = $consulta->rowCount();
+			if($resultado == 0)
+			{
+				echo "erro inserir";
+			}
+			else
+			{
+				echo "inserido com sucesso";
+			}
+		}
+		elseif (isset($_POST["jogoID"]))
+		{
+			$consulta = $conexao->prepare("DELETE FROM jogos WHERE jogoID = ?");
+
+			$jogoID = $_POST["jogoID"];
+			echo $jogoID."<br>"; //debug remover dps
+
+			$consulta->execute(array($jogoID));
+			$resultado = $consulta->rowCount();
+			
+			if($resultado == 0)
+			{
+				echo "erro ao deletar";
+			}
+			else
+			{
+				echo "deletado com sucesso";
+			}
+		}
+
+		$consulta = $conexao->prepare("SELECT * FROM jogos");
+		$consulta->execute();
+		$registros = $consulta->fetchAll();
+	?>
+
 	<body>
 	
 	    <!-- Navigation -->
@@ -40,8 +88,8 @@
 	    	<table id="jogos" class="table table-striped table-bordered">
 	    		<thead>
 	    			<tr>
-	    				<th>Nome</th>
-	    				<th>Categoria</th>
+	    				<th width="200px">Nome</th>
+	    				<th width="100px">Categoria</th>
 	    				<th>Descrição</th>
 	    				<th>Preço</th>
 	    				<th>Gerenciar</th>
@@ -57,8 +105,8 @@
 				    				<td class='jogoDescription'>".$value['jogoDescription']."</td>
 				    				<td class='jogoPrice'>".$value['jogoPrice']."</td>
 				    				<td>
-				    					<a href='#editModal' type='button' class='btn btn-sm btn-warning btnEdit'>Editar</a>
-				    					<a href='#deleteModal' type='button' class='btn btn-sm btn-danger btnDelete'>Deletar</a>
+				    					<a href='#editModal' type='button' style='width: 70px; margin-bottom: 5px' class='btn btn-sm btn-warning btnEdit'>Editar</a>
+				    					<a href='#deleteModal' type='button' style='width: 70px;' class='btn btn-sm btn-danger btnDelete'>Deletar</a>
 				    				</td>
 				    			</tr>";
 	    				}
@@ -68,7 +116,7 @@
 	    	
 			<div class="remodal" data-remodal-id="editModal">
 				<button data-remodal-action="close" class="remodal-close"></button>
-				<form class="well form-horizontal" method="post" id="registerForm">
+				<form action="listJogos.php" class="well form-horizontal" method="post" id="registerForm">
 					<fieldset>
 						<!-- Form Name -->
 						<legend id="modalTitle" class="text-center">Editar Jogo</legend>
@@ -95,8 +143,9 @@
 									<span class="input-group-addon"><i class="fa fa-list-alt" aria-hidden="true"></i></span>
 									<select name="jogoCategory" class="form-control selectpicker" >
 										<option value=" ">Selecione a Categoria</option>
-										<option value="Adventure RPG">Alabama</option>
-										<option value="Alaska">Alaska</option>
+										<option value="Adventure RPG">Adventure RPG</option>
+										<option value="First Person Shooter">First Person Shooter</option>
+										<option value="Simulador">Simulador</option>
 									</select>
 								</div>
 							</div>
@@ -108,7 +157,7 @@
 							<div class="col-md-12 inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
-									<input name="jogoDescription" placeholder="Descrição do jogo" class="form-control" type="text">
+									<textarea rows="5" name="jogoDescription" placeholder="Descrição do jogo" class="form-control" type="text" style="resize: none;"></textarea>
 								</div>
 							</div>
 						</div>
@@ -147,12 +196,15 @@
 			</div>
 			
 			<div class="remodal" data-remodal-id="deleteModal">
-				<button data-remodal-action="close" class="remodal-close"></button>
-				<h2>Deseja deletar este jogo?</h2>
-				<p class="deleteJogo"></p>
-				<br>
-				<button data-remodal-action="cancel" class="remodal-cancel">Não</button>
-				<button data-remodal-action="confirm" class="remodal-confirm">Sim</button>
+				<form action="listJogos.php" method="post">
+					<input type="hidden" name="jogoID" value="">
+					<button data-remodal-action="close" class="remodal-close"></button>
+					<h2>Deseja deletar este jogo?</h2>
+					<p class="deleteJogo"></p>
+					<br>
+					<button data-remodal-action="cancel" class="remodal-cancel">Não</button>
+					<button type="submit" class="remodal-confirm">Sim</button>
+				</form>
 			</div>
 	
 	        <!-- Footer -->
@@ -250,8 +302,9 @@
 	    			$("#modalTitle").text("Criar Jogo");
 	    			$("input[name='jogoID']").val("");
 	    			$("input[name='jogoName']").val("");
+	    			$("select[name='jogoCategory'] option").removeAttr("selected");
 	    			$("option[value=' ']").attr("selected", "selected");
-	    			$("input[name='jogoDescription']").val("");
+	    			$("textarea[name='jogoDescription']").val("");
 	    			$("input[name='jogoPrice']").val("");
 	    		});
 	    		
@@ -266,14 +319,18 @@
 
 	    			$("input[name='jogoID']").val(jogoID);
 	    			$("input[name='jogoName']").val(jogoName);
+	    			$("select[name='jogoCategory'] option").removeAttr("selected");
 	    			$("option[value='"+jogoCategory+"']").attr("selected", "selected");
-	    			$("input[name='jogoDescription']").val(jogoDescription);
+	    			$("select[name='jogoCategory']").val(jogoCategory);
+	    			$("textarea[name='jogoDescription']").val(jogoDescription);
 	    			$("input[name='jogoPrice']").val(jogoPrice);
 	    		});
 	    		
 	    		$(".btnDelete").click(function(){
 	    			var $item = $(this).closest("tr");
+	    			var jogoID = $($item).find(".jogoName").data("id");
 	    			var jogoName = $($item).find(".jogoName").html();
+	    			$("input[name='jogoID']").val(jogoID);
 	    			$(".deleteJogo").empty().append(jogoName);
 	    		});
 	    	});

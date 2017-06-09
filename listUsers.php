@@ -1,10 +1,3 @@
-<?php
-	include('includes/dbconnect.php');
-	$consulta = $conexao->prepare("SELECT * FROM usuarios");
-	$consulta->execute();
-	$registros = $consulta->fetchAll();
-?>
-
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -22,6 +15,59 @@
 	    <link href="css/remodal-default-theme.css" rel="stylesheet" type="text/css">
 	    <link rel="icon" href="images/favicon.png" type="image/x-icon" />
 	</head>
+
+	<?php
+		include('includes/dbconnect.php');
+
+		if (isset($_POST["userName"]))
+		{
+			$consulta = $conexao->prepare("INSERT INTO usuarios (userName, userEmail, userPassword) VALUES (?,?,?)");
+
+			$userName = $_POST["userName"];
+			$userEmail = $_POST["userEmail"];
+			$userPassword = $_POST["userPassword"];
+
+			//debug remover dps
+			echo $userName."<br>";
+			echo $userEmail."<br>";
+			echo $userPassword."<br>";
+
+			$consulta->execute(array($userName, $userEmail, $userPassword));
+			$resultado = $consulta->rowCount();
+			
+			if($resultado == 0)
+			{
+				echo "erro inserir";
+			}
+			else
+			{
+				echo "inserido com sucesso";
+			}
+		}
+		elseif (isset($_POST["userID"]))
+		{
+			$consulta = $conexao->prepare("DELETE FROM usuarios WHERE userID = ?");
+
+			$userID = $_POST["userID"];
+			echo $userID."<br>"; //debug remover dps
+
+			$consulta->execute(array($userID));
+			$resultado = $consulta->rowCount();
+			
+			if($resultado == 0)
+			{
+				echo "erro ao deletar";
+			}
+			else
+			{
+				echo "deletado com sucesso";
+			}
+		}
+
+		$consulta = $conexao->prepare("SELECT * FROM usuarios");
+		$consulta->execute();
+		$registros = $consulta->fetchAll();
+	?>
 
 	<body>
 
@@ -55,8 +101,8 @@
 	    							<td class='userEmail'>".$value['userEmail']."</td>
 	    							<td class='userPassword'>".$value['userPassword']."</td>
 	    							<td>
-	    								<a href='#editModal' type='button' class='btn btn-sm btn-warning btnEdit'>Editar</a>
-	    								<a href='#deleteModal' type='button' class='btn btn-sm btn-danger btnDelete'>Deletar</a>
+	    								<a href='#editModal' type='button' style='width: 70px;' class='btn btn-sm btn-warning btnEdit'>Editar</a>
+	    								<a href='#deleteModal' type='button' style='width: 70px;' class='btn btn-sm btn-danger btnDelete'>Deletar</a>
 	    							</td>
     							</tr>";
 	    				}
@@ -66,7 +112,7 @@
 	    	
 			<div class="remodal" data-remodal-id="editModal">
 				<button data-remodal-action="close" class="remodal-close"></button>
-				<form class="well form-horizontal" method="post" id="registerForm">
+				<form action="listUsers.php" class="well form-horizontal" method="post" id="registerForm">
 					<fieldset>
 						<!-- Form Name -->
 						<legend id="modalTitle" class="text-center">Editar Usuário</legend>
@@ -120,12 +166,15 @@
 			</div>
 			
 			<div class="remodal" data-remodal-id="deleteModal">
-				<button data-remodal-action="close" class="remodal-close"></button>
-				<h2>Deseja deletar este usuário?</h2>
-				<p class="deleteUser"></p>
-				<br>
-				<button data-remodal-action="cancel" class="remodal-cancel">Não</button>
-				<button data-remodal-action="confirm" class="remodal-confirm">Sim</button>
+				<form action="listUsers.php" method="post">
+					<input type="hidden" name="userID" value="">
+					<button data-remodal-action="close" class="remodal-close"></button>
+					<h2>Deseja deletar este usuário?</h2>
+					<p class="deleteUser"></p>
+					<br>
+					<button data-remodal-action="cancel" class="remodal-cancel">Não</button>
+					<button type="submit" class="remodal-confirm">Sim</button>
+				</form>
 			</div>
 	
 	        <!-- Footer -->
@@ -226,9 +275,9 @@
 	    			var userName = $($item).find(".userName").html();
 	    			var userEmail = $($item).find(".userEmail").html();
 	    			var userPassword = $($item).find(".userPassword").html();
-	    			var jogoID = $($item).find(".userName").data("id");
+	    			var userID = $($item).find(".userName").data("id");
 	    			
-	    			$("input[name='userID']").val(jogoID);
+	    			$("input[name='userID']").val(userID);
 	    			$("input[name='userName']").val(userName);
 	    			$("input[name='userEmail']").val(userEmail);
 	    			$("input[name='userPassword']").val(userPassword);
@@ -236,7 +285,9 @@
 	    		
 	    		$(".btnDelete").click(function(){
 	    			var $item = $(this).closest("tr");
+	    			var userID = $($item).find(".userName").data("id");
 	    			var userName = $($item).find(".userName").html();
+	    			$("input[name='userID']").val(userID);
 	    			$(".deleteUser").empty().append(userName);
 	    		});
 	    	});
