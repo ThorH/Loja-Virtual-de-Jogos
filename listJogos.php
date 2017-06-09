@@ -21,29 +21,51 @@
 
 		if (isset($_POST["jogoName"]))
 		{
-			$consulta = $conexao->prepare("INSERT INTO jogos (jogoName, jogoCategory, jogoDescription, jogoPrice) VALUES (?,?,?,?)");
-			$jogoName = $_POST["jogoName"];
-			$jogoCategory = $_POST["jogoCategory"];
-			$jogoDescription = $_POST["jogoDescription"];
-			$jogoPrice = $_POST["jogoPrice"];
-			$jogoPrice = str_replace(",", ".", $jogoPrice);
-			//$jogoImage = $_POST["jogoImage"];
-
-			//debug remover dps
-			echo $jogoName."<br>";
-			echo $jogoCategory."<br>";
-			echo $jogoDescription."<br>";
-			echo $jogoPrice."<br>";
-
-			$consulta->execute(array($jogoName, $jogoCategory, $jogoDescription, $jogoPrice));
-			$resultado = $consulta->rowCount();
-			if($resultado == 0)
+			if ($_POST["jogoID"] > 0)
 			{
-				echo "erro inserir";
+				$consulta = $conexao->prepare("UPDATE jogos SET jogoName = ?, jogoCategory = ?, jogoDescription = ?, jogoPrice = ? WHERE jogoID = ?");
+
+				$jogoID = $_POST["jogoID"];
+				$jogoName = $_POST["jogoName"];
+				$jogoCategory = $_POST["jogoCategory"];
+				$jogoDescription = $_POST["jogoDescription"];
+				$jogoPrice = $_POST["jogoPrice"];
+				$jogoPrice = str_replace(",", ".", $jogoPrice);
+
+				$consulta->execute(array($jogoName, $jogoCategory, $jogoDescription, $jogoPrice, $jogoID));
+				$resultado = $consulta->rowCount();
+				
+				if ($resultado == 0)
+				{
+					echo "erro ao atualizar";
+				}
+				else
+				{
+					echo "atualizado com sucesso";
+				}
 			}
 			else
 			{
-				echo "inserido com sucesso";
+				$consulta = $conexao->prepare("INSERT INTO jogos (jogoName, jogoCategory, jogoDescription, jogoPrice) VALUES (?,?,?,?)");
+
+				$jogoName = $_POST["jogoName"];
+				$jogoCategory = $_POST["jogoCategory"];
+				$jogoDescription = $_POST["jogoDescription"];
+				$jogoPrice = $_POST["jogoPrice"];
+				$jogoPrice = str_replace(",", ".", $jogoPrice);
+				//$jogoImage = $_POST["jogoImage"];
+
+				$consulta->execute(array($jogoName, $jogoCategory, $jogoDescription, $jogoPrice));
+				$resultado = $consulta->rowCount();
+
+				if($resultado == 0)
+				{
+					echo "erro inserir";
+				}
+				else
+				{
+					echo "inserido com sucesso";
+				}
 			}
 		}
 		elseif (isset($_POST["jogoID"]))
@@ -51,7 +73,6 @@
 			$consulta = $conexao->prepare("DELETE FROM jogos WHERE jogoID = ?");
 
 			$jogoID = $_POST["jogoID"];
-			echo $jogoID."<br>"; //debug remover dps
 
 			$consulta->execute(array($jogoID));
 			$resultado = $consulta->rowCount();
@@ -99,16 +120,16 @@
 	    			<?php
 	    				foreach ($registros as $key => $value) 
 	    				{
-		    				echo "<tr>
-				    				<td class='jogoName' data-id='".$value['jogoID']."'>".$value['jogoName']."</td>
-				    				<td class='jogoCategory'>".$value['jogoCategory']."</td>
-				    				<td class='jogoDescription'>".$value['jogoDescription']."</td>
-				    				<td class='jogoPrice'>".$value['jogoPrice']."</td>
-				    				<td>
-				    					<a href='#editModal' type='button' style='width: 70px; margin-bottom: 5px' class='btn btn-sm btn-warning btnEdit'>Editar</a>
-				    					<a href='#deleteModal' type='button' style='width: 70px;' class='btn btn-sm btn-danger btnDelete'>Deletar</a>
-				    				</td>
-				    			</tr>";
+		    				echo "<tr>";
+				    		echo 	"<td class='jogoName' data-id='".$value['jogoID']."'>".$value['jogoName']."</td>";
+				    		echo	"<td class='jogoCategory'>".$value['jogoCategory']."</td>";
+				    		echo	"<td class='jogoDescription'>".$value['jogoDescription']."</td>";
+				    		echo	"<td class='jogoPrice'>".$value['jogoPrice']."</td>";
+				    		echo	"<td>";
+				    		echo		"<a href='#editModal' type='button' style='width: 70px; margin-bottom: 5px' class='btn btn-sm btn-warning btnEdit'>Editar</a>";
+				    		echo		"<a href='#deleteModal' type='button' style='width: 70px;' class='btn btn-sm btn-danger btnDelete'>Deletar</a>";
+				    		echo	"</td>";
+				    		echo "</tr>";
 	    				}
 	    			?>
 	    		</tbody>
@@ -208,10 +229,9 @@
 			</div>
 	
 	        <!-- Footer -->
-	    <?php
-	    	include("includes/footer.php");
-	    ?>
-		
+		    <?php
+		    	include("includes/footer.php");
+		    ?>
 	    </div>
 	
 	    <script src="js/jquery.js"></script>
@@ -311,12 +331,12 @@
 	    		$(".btnEdit").click(function(){
 	    			$("#modalTitle").text("Editar Jogo");
 	    			var $item = $(this).closest("tr");
+	    			var jogoID = $($item).find(".jogoName").data("id");
 	    			var jogoName = $($item).find(".jogoName").html();
 	    			var jogoCategory = $($item).find(".jogoCategory").html();
 	    			var jogoDescription = $($item).find(".jogoDescription").html();
 	    			var jogoPrice = $($item).find(".jogoPrice").html();
-	    			var jogoID = $($item).find(".jogoName").data("id");
-
+	    			
 	    			$("input[name='jogoID']").val(jogoID);
 	    			$("input[name='jogoName']").val(jogoName);
 	    			$("select[name='jogoCategory'] option").removeAttr("selected");

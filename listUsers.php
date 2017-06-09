@@ -21,35 +21,53 @@
 
 		if (isset($_POST["userName"]))
 		{
-			$consulta = $conexao->prepare("INSERT INTO usuarios (userName, userEmail, userPassword) VALUES (?,?,?)");
-
-			$userName = $_POST["userName"];
-			$userEmail = $_POST["userEmail"];
-			$userPassword = $_POST["userPassword"];
-
-			//debug remover dps
-			echo $userName."<br>";
-			echo $userEmail."<br>";
-			echo $userPassword."<br>";
-
-			$consulta->execute(array($userName, $userEmail, $userPassword));
-			$resultado = $consulta->rowCount();
-			
-			if($resultado == 0)
+			if($_POST["userID"] > 0) //edit
 			{
-				echo "erro inserir";
+				$consulta = $conexao->prepare("UPDATE usuarios SET userName = ?, userEmail = ?, userPassword = ? WHERE userID = ?");
+
+				$userID = $_POST["userID"];
+				$userName = $_POST["userName"];
+				$userEmail = $_POST["userEmail"];
+				$userPassword = $_POST["userPassword"];
+
+				$consulta->execute(array($userName, $userEmail, $userPassword, $userID));
+				$resultado = $consulta->rowCount();
+				
+				if ($resultado == 0)
+				{
+					echo "erro ao atualizar";
+				}
+				else
+				{
+					echo "atualizado com sucesso";
+				}
 			}
-			else
+			else //insert
 			{
-				echo "inserido com sucesso";
+				$consulta = $conexao->prepare("INSERT INTO usuarios (userName, userEmail, userPassword) VALUES (?,?,?)");
+
+				$userName = $_POST["userName"];
+				$userEmail = $_POST["userEmail"];
+				$userPassword = $_POST["userPassword"];
+
+				$consulta->execute(array($userName, $userEmail, $userPassword));
+				$resultado = $consulta->rowCount();
+				
+				if($resultado == 0)
+				{
+					echo "erro inserir";
+				}
+				else
+				{
+					echo "inserido com sucesso";
+				}
 			}
 		}
-		elseif (isset($_POST["userID"]))
+		elseif (isset($_POST["userID"])) //delete
 		{
 			$consulta = $conexao->prepare("DELETE FROM usuarios WHERE userID = ?");
 
 			$userID = $_POST["userID"];
-			echo $userID."<br>"; //debug remover dps
 
 			$consulta->execute(array($userID));
 			$resultado = $consulta->rowCount();
@@ -64,7 +82,7 @@
 			}
 		}
 
-		$consulta = $conexao->prepare("SELECT * FROM usuarios");
+		$consulta = $conexao->prepare("SELECT * FROM usuarios"); //read
 		$consulta->execute();
 		$registros = $consulta->fetchAll();
 	?>
@@ -96,15 +114,15 @@
 	    			<?php  
 	    				foreach ($registros as $key => $value) 
 	    				{
-	    					echo "<tr>
-	    							<td class='userName' data-id='".$value['userID']."'>".$value['userName']."</td>
-	    							<td class='userEmail'>".$value['userEmail']."</td>
-	    							<td class='userPassword'>".$value['userPassword']."</td>
-	    							<td>
-	    								<a href='#editModal' type='button' style='width: 70px;' class='btn btn-sm btn-warning btnEdit'>Editar</a>
-	    								<a href='#deleteModal' type='button' style='width: 70px;' class='btn btn-sm btn-danger btnDelete'>Deletar</a>
-	    							</td>
-    							</tr>";
+	    					echo "<tr>";
+	    					echo 	"<td class='userName' data-id='".$value['userID']."'>".$value['userName']."</td>";
+	    					echo	"<td class='userEmail'>".$value['userEmail']."</td>";
+	    					echo	"<td class='userPassword'>".$value['userPassword']."</td>";
+	    					echo	"<td>";
+	    					echo		"<a href='#editModal' type='button' style='width: 70px;' class='btn btn-sm btn-warning btnEdit'>Editar</a>";
+	    					echo		"<a href='#deleteModal' type='button' style='width: 70px;' class='btn btn-sm btn-danger btnDelete'>Deletar</a>";
+	    					echo	"</td>";
+    						echo "</tr>";
 	    				}
 	    			?>
 	    		</tbody>
@@ -115,7 +133,7 @@
 				<form action="listUsers.php" class="well form-horizontal" method="post" id="registerForm">
 					<fieldset>
 						<!-- Form Name -->
-						<legend id="modalTitle" class="text-center">Editar Usuário</legend>
+						<legend id="modalTitle" class="text-center"></legend>
 
 						<!-- Hidden ID-->
 						<input type="hidden" name="userID" value="">
@@ -126,7 +144,7 @@
 							<div class="col-md-12 center-block text-center pagination-centered inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></i></span>
-									<input name="userName" placeholder="Nome do usuário" class="form-control" type="text">
+									<input name="userName" placeholder="João" class="form-control" type="text">
 								</div>
 							</div>
 						</div>
@@ -137,7 +155,7 @@
 							<div class="col-md-12 center-block text-center pagination-centered inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-									<input name="userEmail" placeholder="E-mail do usuário" class="form-control" type="text">
+									<input name="userEmail" placeholder="joao@joao.com" class="form-control" type="text">
 								</div>
 							</div>
 						</div>
@@ -148,7 +166,7 @@
 							<div class="col-md-12 inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
-									<input name="userPassword" placeholder="Senha do usuário" class="form-control" type="text">
+									<input name="userPassword" placeholder="123456" class="form-control" type="text">
 								</div>
 							</div>
 						</div>
@@ -178,10 +196,9 @@
 			</div>
 	
 	        <!-- Footer -->
-	    <?php
-	    	include("includes/footer.php");
-	    ?>
-		
+		    <?php
+		    	include("includes/footer.php");
+		    ?>
 	    </div>
 	
 	    <script src="js/jquery.js"></script>
@@ -264,6 +281,7 @@
 
 	    		$(".btnCreate").click(function(){
 	    			$("#modalTitle").text("Criar Usuário");
+	    			$("input[name='userID']").val("");
 	    			$("input[name='userName']").val("");
 	    			$("input[name='userEmail']").val("");
 	    			$("input[name='userPassword']").val("");
@@ -272,10 +290,10 @@
 	    		$(".btnEdit").click(function(){
 					$("#modalTitle").text("Editar Usuário");
 	    			var $item = $(this).closest("tr");
+	    			var userID = $($item).find(".userName").data("id");
 	    			var userName = $($item).find(".userName").html();
 	    			var userEmail = $($item).find(".userEmail").html();
 	    			var userPassword = $($item).find(".userPassword").html();
-	    			var userID = $($item).find(".userName").data("id");
 	    			
 	    			$("input[name='userID']").val(userID);
 	    			$("input[name='userName']").val(userName);
