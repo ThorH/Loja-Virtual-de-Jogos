@@ -107,7 +107,7 @@
 	    				<th>Nome</th>
 	    				<th>E-mail</th>
 	    				<th>Senha</th>
-	    				<th>Gerenciar</th>
+	    				<th width="70px">Gerenciar</th>
 	    			</tr>
 	    		</thead>
 	    		<tbody>
@@ -119,7 +119,7 @@
 	    					echo	"<td class='userEmail'>".$value['userEmail']."</td>";
 	    					echo	"<td class='userPassword'>".$value['userPassword']."</td>";
 	    					echo	"<td>";
-	    					echo		"<a href='#editModal' type='button' style='width: 70px;' class='btn btn-sm btn-warning btnEdit'>Editar</a>";
+	    					echo		"<a href='#editModal' type='button' style='width: 70px; margin-bottom: 5px;' class='btn btn-sm btn-warning btnEdit'>Editar</a>";
 	    					echo		"<a href='#deleteModal' type='button' style='width: 70px;' class='btn btn-sm btn-danger btnDelete'>Deletar</a>";
 	    					echo	"</td>";
     						echo "</tr>";

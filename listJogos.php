@@ -113,7 +113,7 @@
 	    				<th width="100px">Categoria</th>
 	    				<th>Descrição</th>
 	    				<th>Preço</th>
-	    				<th>Gerenciar</th>
+	    				<th width="70px">Gerenciar</th>
 	    			</tr>
 	    		</thead>
 	    		<tbody>
