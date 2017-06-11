@@ -1,3 +1,12 @@
+<?php
+	session_start();
+
+	if (!isset($_SESSION['user'])) 
+	{
+		header("Location: index.php");
+	}
+?>
+
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -13,10 +22,6 @@
 	    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
    	    <link rel="icon" href="images/favicon.png" type="image/x-icon">
 	</head>
-
-	<?php
-		session_start();
-	?>
 
 	<body>
 	

@@ -1,3 +1,12 @@
+<?php
+	session_start();
+
+	if (!isset($_SESSION['user'])) 
+	{
+		header("Location: index.php");
+	}
+?>
+
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -16,13 +25,12 @@
 	    <link rel="icon" href="images/favicon.png" type="image/x-icon">
 	</head>
 
-	<?php
-		session_start();
+	<?php	
 		include('includes/dbconnect.php');
 
 		if (isset($_POST["userName"]))
 		{
-			if($_POST["userID"] > 0) //edit
+			if ($_POST["userID"] > 0) //edit
 			{
 				$consulta = $conexao->prepare("UPDATE usuarios SET userName = ?, userEmail = ?, userPassword = ? WHERE userID = ?");
 
