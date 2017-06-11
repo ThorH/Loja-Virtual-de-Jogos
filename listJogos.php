@@ -31,20 +31,35 @@
 				$jogoPrice = $_POST["jogoPrice"];
 				$jogoPrice = str_replace(",", ".", $jogoPrice);
 
-				//deleta a imagem antiga
+				//busca a informacao da imagem
 				$consulta = $conexao->prepare("SELECT jogoImage from jogos WHERE jogoID = ?");
 				$consulta->execute(array($jogoID));
 				$registros = $consulta->fetchAll();
 
-				foreach ($registros as $key => $value) {
-					$jogoImage = $value['jogoImage'];
-					unlink($jogoImage);
-				}
+				if (!$_FILES['jogoImage']['error'] == 4) //tem imagem
+				{
+					//deleta a imagem antiga
+					foreach ($registros as $key => $value) 
+					{
+						if(!is_null($value['jogoImage']))
+						{
+							$jogoImage = $value['jogoImage'];
+							unlink($jogoImage);
+						}
+					}
 
-				//sobe pro servidor a nova imagem
-				$uploadDirectory = 'images/jogos/';
-				$uploadFile = $uploadDirectory . basename($_FILES['jogoImage']['name']);
-				move_uploaded_file($_FILES['jogoImage']['tmp_name'], $uploadFile);
+					//sobe pro servidor a nova imagem
+					$uploadDirectory = 'images/jogos/';
+					$uploadFile = $uploadDirectory . basename($_FILES['jogoImage']['name']);
+					move_uploaded_file($_FILES['jogoImage']['tmp_name'], $uploadFile);
+				}
+				else //nao tem imagem
+				{
+					foreach ($registros as $key => $value) 
+					{
+						$uploadFile = $value['jogoImage'];
+					}
+				}
 
 				//executa o update
 				$consulta = $conexao->prepare("UPDATE jogos SET jogoName = ?, jogoCategory = ?, jogoDescription = ?, jogoPrice = ?, jogoImage = ? WHERE jogoID = ?");
@@ -70,9 +85,16 @@
 				$jogoPrice = str_replace(",", ".", $jogoPrice);
 
 				//sobe pro servidor a imagem
-				$uploadDirectory = 'images/jogos/';
-				$uploadFile = $uploadDirectory . basename($_FILES['jogoImage']['name']);
-				move_uploaded_file($_FILES['jogoImage']['tmp_name'], $uploadFile);
+				if (!$_FILES['jogoImage']['error'] == 4) //tem imagem
+				{
+					$uploadDirectory = 'images/jogos/';
+					$uploadFile = $uploadDirectory . basename($_FILES['jogoImage']['name']);
+					move_uploaded_file($_FILES['jogoImage']['tmp_name'], $uploadFile);	
+				}
+				else //nao tem imagem
+				{
+					$uploadFile = null;
+				}
 
 				//executa o insert
 				$consulta = $conexao->prepare("INSERT INTO jogos (jogoName, jogoCategory, jogoDescription, jogoPrice, jogoImage) VALUES (?,?,?,?,?)");
@@ -99,9 +121,13 @@
 			$consulta->execute(array($jogoID));
 			$registros = $consulta->fetchAll();
 
-			foreach ($registros as $key => $value) {
-				$jogoImage = $value['jogoImage'];
-				unlink($jogoImage);
+			foreach ($registros as $key => $value) 
+			{
+				if(!is_null($value['jogoImage']))
+				{
+					$jogoImage = $value['jogoImage'];
+					unlink($jogoImage);
+				}
 			}
 
 			//execute o delete
@@ -146,6 +172,7 @@
 	    				<th width="100px">Categoria</th>
 	    				<th>Descrição</th>
 	    				<th>Preço</th>
+	    				<th>Imagem</th>
 	    				<th width="70px">Gerenciar</th>
 	    			</tr>
 	    		</thead>
@@ -158,6 +185,7 @@
 				    		echo	"<td class='jogoCategory'>".$value['jogoCategory']."</td>";
 				    		echo	"<td class='jogoDescription'>".$value['jogoDescription']."</td>";
 				    		echo	"<td class='jogoPrice'>".$value['jogoPrice']."</td>";
+				    		echo 	"<td class='jogoImage'><img src='".$value['jogoImage']."' style='width: 120px; height: 70px;'></td>";
 				    		echo	"<td>";
 				    		echo		"<a href='#editModal' type='button' style='width: 70px; margin-bottom: 5px' class='btn btn-sm btn-warning btnEdit'>Editar</a>";
 				    		echo		"<a href='#deleteModal' type='button' style='width: 70px;' class='btn btn-sm btn-danger btnDelete'>Deletar</a>";
@@ -316,13 +344,6 @@
 			            	validators: {
 			            		notEmpty: {
 			            			message: 'Preencha o preço do jogo.'
-			            		}
-			            	}
-			            },
-			            jogoImage: {
-			            	validators: {
-			            		notEmpty: {
-			            			message: 'Insira uma imagem do jogo.'
 			            		}
 			            	}
 			            }
