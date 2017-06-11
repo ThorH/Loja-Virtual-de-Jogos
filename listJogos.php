@@ -21,10 +21,9 @@
 
 		if (isset($_POST["jogoName"]))
 		{
-			if ($_POST["jogoID"] > 0)
+			if ($_POST["jogoID"] > 0) //edit
 			{
-				$consulta = $conexao->prepare("UPDATE jogos SET jogoName = ?, jogoCategory = ?, jogoDescription = ?, jogoPrice = ? WHERE jogoID = ?");
-
+				//recebe os dados do form
 				$jogoID = $_POST["jogoID"];
 				$jogoName = $_POST["jogoName"];
 				$jogoCategory = $_POST["jogoCategory"];
@@ -32,7 +31,24 @@
 				$jogoPrice = $_POST["jogoPrice"];
 				$jogoPrice = str_replace(",", ".", $jogoPrice);
 
-				$consulta->execute(array($jogoName, $jogoCategory, $jogoDescription, $jogoPrice, $jogoID));
+				//deleta a imagem antiga
+				$consulta = $conexao->prepare("SELECT jogoImage from jogos WHERE jogoID = ?");
+				$consulta->execute(array($jogoID));
+				$registros = $consulta->fetchAll();
+
+				foreach ($registros as $key => $value) {
+					$jogoImage = $value['jogoImage'];
+					unlink($jogoImage);
+				}
+
+				//sobe pro servidor a nova imagem
+				$uploadDirectory = 'images/jogos/';
+				$uploadFile = $uploadDirectory . basename($_FILES['jogoImage']['name']);
+				move_uploaded_file($_FILES['jogoImage']['tmp_name'], $uploadFile);
+
+				//executa o update
+				$consulta = $conexao->prepare("UPDATE jogos SET jogoName = ?, jogoCategory = ?, jogoDescription = ?, jogoPrice = ?, jogoImage = ? WHERE jogoID = ?");
+				$consulta->execute(array($jogoName, $jogoCategory, $jogoDescription, $jogoPrice, $uploadFile, $jogoID));
 				$resultado = $consulta->rowCount();
 				
 				if ($resultado == 0)
@@ -44,21 +60,26 @@
 					echo "atualizado com sucesso";
 				}
 			}
-			else
+			else //insert
 			{
-				$consulta = $conexao->prepare("INSERT INTO jogos (jogoName, jogoCategory, jogoDescription, jogoPrice) VALUES (?,?,?,?)");
-
+				//recebe os dados do form
 				$jogoName = $_POST["jogoName"];
 				$jogoCategory = $_POST["jogoCategory"];
 				$jogoDescription = $_POST["jogoDescription"];
 				$jogoPrice = $_POST["jogoPrice"];
 				$jogoPrice = str_replace(",", ".", $jogoPrice);
-				//$jogoImage = $_POST["jogoImage"];
 
-				$consulta->execute(array($jogoName, $jogoCategory, $jogoDescription, $jogoPrice));
+				//sobe pro servidor a imagem
+				$uploadDirectory = 'images/jogos/';
+				$uploadFile = $uploadDirectory . basename($_FILES['jogoImage']['name']);
+				move_uploaded_file($_FILES['jogoImage']['tmp_name'], $uploadFile);
+
+				//executa o insert
+				$consulta = $conexao->prepare("INSERT INTO jogos (jogoName, jogoCategory, jogoDescription, jogoPrice, jogoImage) VALUES (?,?,?,?,?)");
+				$consulta->execute(array($jogoName, $jogoCategory, $jogoDescription, $jogoPrice, $uploadFile));
 				$resultado = $consulta->rowCount();
 
-				if($resultado == 0)
+				if ($resultado == 0)
 				{
 					echo "erro inserir";
 				}
@@ -68,16 +89,27 @@
 				}
 			}
 		}
-		elseif (isset($_POST["jogoID"]))
+		elseif (isset($_POST["jogoID"])) //delete
 		{
-			$consulta = $conexao->prepare("DELETE FROM jogos WHERE jogoID = ?");
-
+			//recebe os dados do form
 			$jogoID = $_POST["jogoID"];
 
+			//deleta a imagem antiga
+			$consulta = $conexao->prepare("SELECT jogoImage from jogos WHERE jogoID = ?");
+			$consulta->execute(array($jogoID));
+			$registros = $consulta->fetchAll();
+
+			foreach ($registros as $key => $value) {
+				$jogoImage = $value['jogoImage'];
+				unlink($jogoImage);
+			}
+
+			//execute o delete
+			$consulta = $conexao->prepare("DELETE FROM jogos WHERE jogoID = ?");
 			$consulta->execute(array($jogoID));
 			$resultado = $consulta->rowCount();
 			
-			if($resultado == 0)
+			if ($resultado == 0)
 			{
 				echo "erro ao deletar";
 			}
@@ -87,6 +119,7 @@
 			}
 		}
 
+		//read
 		$consulta = $conexao->prepare("SELECT * FROM jogos");
 		$consulta->execute();
 		$registros = $consulta->fetchAll();
@@ -137,7 +170,7 @@
 	    	
 			<div class="remodal" data-remodal-id="editModal">
 				<button data-remodal-action="close" class="remodal-close"></button>
-				<form action="listJogos.php" class="well form-horizontal" method="post" id="registerForm">
+				<form action="listJogos.php" class="well form-horizontal" method="post" id="registerForm" enctype="multipart/form-data">
 					<fieldset>
 						<!-- Form Name -->
 						<legend id="modalTitle" class="text-center">Editar Jogo</legend>
@@ -283,6 +316,13 @@
 			            	validators: {
 			            		notEmpty: {
 			            			message: 'Preencha o preço do jogo.'
+			            		}
+			            	}
+			            },
+			            jogoImage: {
+			            	validators: {
+			            		notEmpty: {
+			            			message: 'Insira uma imagem do jogo.'
 			            		}
 			            	}
 			            }
