@@ -1,3 +1,46 @@
+<?php
+	session_start();
+		
+    if (isset($_SESSION['userID']) != "")
+    {
+        header("Location: admin.php");
+    }
+
+    $loginError = 0;
+
+	if (isset($_POST["userName"]))
+	{
+		$userName = $_POST["userName"];
+		$userPassword = $_POST["userPassword"];
+
+		include('includes/dbconnect.php');
+        $consulta = $conexao->prepare("SELECT userID, userName, userPassword FROM usuarios WHERE userName = ? AND userPassword = ?");
+        $consulta->execute(array($userName, $userPassword));
+        $registros = $consulta->fetchAll();
+
+        if (!empty($registros))
+        {
+	        foreach ($registros as $key => $value) 
+	        {
+	        	if ($userName == $value["userName"] && $userPassword == $value["userPassword"])
+	        	{
+	        		$_SESSION['userID'] = $value['userID'];
+	        		$_SESSION['userName'] = $value['userName'];
+	        		header("Location: admin.php");
+	        	}
+	        	else
+	        	{
+	        		$loginError++;
+	        	}
+	        }
+        }
+        else
+        {
+        	$loginError++;
+        }
+	}
+?>
+
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -12,48 +55,6 @@
 	    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	    <link rel="icon" href="images/favicon.png" type="image/x-icon">
 	</head>
-
-	<?php
-		session_start();
-		$loginError = 0;
-		
-	    if (isset($_SESSION['user']) != "") 
-	    {
-	        header("Location: admin.php");
-	    }
-
-		if (isset($_POST["userName"]))
-		{
-			$userName = $_POST["userName"];
-			$userPassword = $_POST["userPassword"];
-
-			include('includes/dbconnect.php');
-	        $consulta = $conexao->prepare("SELECT userID, userName, userPassword FROM usuarios WHERE userName = ? AND userPassword = ?");
-	        $consulta->execute(array($userName, $userPassword));
-	        $registros = $consulta->fetchAll();
-
-	        if (!empty($registros))
-	        {
-		        foreach ($registros as $key => $value) 
-		        {
-		        	if ($userName == $value["userName"] && $userPassword == $value["userPassword"])
-		        	{
-		        		$_SESSION['userID'] = $value['userID'];
-		        		$_SESSION['userName'] = $value['userName'];
-		        		header("Location: admin.php");
-		        	}
-		        	else
-		        	{
-		        		$loginError++;
-		        	}
-		        }
-	        }
-	        else
-	        {
-	        	$loginError++;
-	        }
-		}
-	?>
 
 	<body>
 	
