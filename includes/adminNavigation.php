@@ -12,6 +12,10 @@
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<p class="navbar-text col-md-12">Olá, <?php echo $_SESSION['userName'];?></p>
+				</li>
+				
                 <li>
                     <a href="listUsers.php">Usuários</a>
                 </li>
@@ -20,7 +24,7 @@
                     <a href="listJogos.php">Jogos</a>
                 </li>
 
-				<li><a href="index.php">Logout</a></li>
+				<li><a href="logout.php?logout">Logout</a></li>
 			</ul>
 		</div>
 	</div>

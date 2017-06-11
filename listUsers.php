@@ -13,10 +13,11 @@
 	    <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 	    <link href="css/remodal.css" rel="stylesheet" type="text/css">
 	    <link href="css/remodal-default-theme.css" rel="stylesheet" type="text/css">
-	    <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+	    <link rel="icon" href="images/favicon.png" type="image/x-icon">
 	</head>
 
 	<?php
+		session_start();
 		include('includes/dbconnect.php');
 
 		if (isset($_POST["userName"]))
@@ -96,7 +97,6 @@
 
 	    <!-- Page Content -->
 	    <div class="container dataTable">
-	    
 	    	<a class="btn btn-success btnCreate" href="#editModal">Adicionar</a>
 	    	<br>
 	    	<br>

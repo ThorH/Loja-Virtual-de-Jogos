@@ -13,10 +13,11 @@
 	    <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 	    <link href="css/remodal.css" rel="stylesheet" type="text/css">
 	    <link href="css/remodal-default-theme.css" rel="stylesheet" type="text/css">
-	    <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+	    <link rel="icon" href="images/favicon.png" type="image/x-icon">
 	</head>
 
 	<?php
+		session_start();
 		include('includes/dbconnect.php');
 
 		if (isset($_POST["jogoName"]))
@@ -160,7 +161,6 @@
 
 	    <!-- Page Content -->
 	    <div class="container dataTable">
-
 	    	<a class="btn btn-success btnCreate" href="#editModal">Adicionar</a>
 	    	<br>
 	    	<br>
@@ -185,7 +185,7 @@
 				    		echo	"<td class='jogoCategory'>".$value['jogoCategory']."</td>";
 				    		echo	"<td class='jogoDescription'>".$value['jogoDescription']."</td>";
 				    		echo	"<td class='jogoPrice'>".$value['jogoPrice']."</td>";
-				    		echo 	"<td class='jogoImage'><img src='".$value['jogoImage']."' style='width: 120px; height: 70px;'></td>";
+				    		echo 	"<td class='jogoImage'><img src='".(!is_null($value['jogoImage']) ? $value['jogoImage'] : 'images/img_not_found.png')."' style='width: 120px; height: 70px;'></td>";
 				    		echo	"<td>";
 				    		echo		"<a href='#editModal' type='button' style='width: 70px; margin-bottom: 5px' class='btn btn-sm btn-warning btnEdit'>Editar</a>";
 				    		echo		"<a href='#deleteModal' type='button' style='width: 70px;' class='btn btn-sm btn-danger btnDelete'>Deletar</a>";

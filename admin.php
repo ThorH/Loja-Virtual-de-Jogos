@@ -14,6 +14,10 @@
    	    <link rel="icon" href="images/favicon.png" type="image/x-icon">
 	</head>
 
+	<?php
+		session_start();
+	?>
+
 	<body>
 	
 	    <!-- Navigation -->

@@ -99,3 +99,15 @@ footer {
 #registerForm{
 	margin-top: 50px;
 }
+
+#loginForm{
+    margin-top: 50px;
+    max-width: 350px;
+}
+
+#loginTitle { 
+ border:0 solid #fff; 
+ border-bottom-width:1px;
+ padding-bottom:10px;
+ text-align: center;
+}
