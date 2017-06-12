@@ -42,7 +42,7 @@
                 <div class="col-lg-12">
                     <h1 class="page-header"><?php echo $jogoName ?></h1>
                     <ol class="breadcrumb">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.php">Home</a></li>
                         <li><a href="jogos.php">Jogos</a></li>
                         <li class="active">Jogo</li>
                     </ol>
