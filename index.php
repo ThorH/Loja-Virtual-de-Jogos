@@ -23,7 +23,7 @@
 
 	<body>
 	    <!-- Navigation -->
-	    <?php include "includes/homeNavigation.php"; ?>
+	    <?php include ("includes/homeNavigation.php"); ?>
 	
 	    <!-- Header Carousel -->
 	    <header id="myCarousel" class="carousel slide">
@@ -38,18 +38,15 @@
 	        <div class="carousel-inner">
 	            <div class="item active">
 	                <div class="fill" style="background-image:url('images/banner1.jpg');"></div>
-	                <div class="carousel-caption">
-	                </div>
+	                <div class="carousel-caption"></div>
 	            </div>
 	            <div class="item">
 	                <div class="fill" style="background-image:url('images/banner2.jpg');"></div>
-	                <div class="carousel-caption">
-	                </div>
+	                <div class="carousel-caption"></div>
 	            </div>
 	            <div class="item">
 	                <div class="fill" style="background-image:url('images/banner3.jpg');"></div>
-	                <div class="carousel-caption">
-	                </div>
+	                <div class="carousel-caption"></div>
 	            </div>
 	        </div>
 	
@@ -89,7 +86,7 @@
 	        <hr>
 	
 	        <!-- Footer -->
-			<?php include 'includes/footer.php'; ?>
+			<?php include ("includes/footer.php"); ?>
 	    </div>
 	    <!-- /.container -->
 	

@@ -18,25 +18,27 @@ create table jogos (
 create table jogos_log (
     logID int primary key AUTO_INCREMENT,
     logData datetime not null DEFAULT NOW(),
-    oldJogoName varchar(100) not null,
-    oldJogoCategory varchar(100) not null,
-    oldJogoDescription varchar(100) not null
-    oldJogoPrice decimal(10,2) not null,
+    evento varchar(10) not null,
+    oldJogoName varchar(100),
+    oldJogoCategory varchar(100),
+    oldJogoDescription varchar(100),
+    oldJogoPrice decimal(10,2),
     oldJogoImage varchar(100),
-    newJogoName varchar(100) not null,
-    newJogoCategory varchar(100) not null,
-    newJogoDescription varchar(100) not null,
-    newJogoPrice decimal(10,2) not null,
+    newJogoName varchar(100),
+    newJogoCategory varchar(100),
+    newJogoDescription varchar(100),
+    newJogoPrice decimal(10,2),
     newJogoImage varchar(100)
 );
 
 create table usuarios_log (
 	logID int primary key AUTO_INCREMENT,
 	logData datetime not null DEFAULT NOW(),
-	oldUserName varchar(100) not null,
-	oldUserEmail varchar(100) not null,
-	oldUserPassword varchar(100) not null,
-	newUserName varchar(100) not null,
-	newUserEmail varchar(100) not null,
-	newUserPassword varchar(100) not null
+	evento varchar(10) not null,
+	oldUserName varchar(100),
+	oldUserEmail varchar(100),
+	oldUserPassword varchar(100),
+	newUserName varchar(100),
+	newUserEmail varchar(100),
+	newUserPassword varchar(100)
 );
