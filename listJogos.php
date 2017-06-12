@@ -26,7 +26,7 @@
 	</head>
 
 	<?php	
-		include('includes/dbconnect.php');
+		include ("includes/dbconnect.php");
 
 		if (isset($_POST["jogoName"]))
 		{
@@ -295,7 +295,7 @@
 			</div>
 	
 	        <!-- Footer -->
-		    <?php include("includes/footer.php"); ?>
+		    <?php include ("includes/footer.php"); ?>
 	    </div>
 	
 	    <script src="js/jquery.js"></script>
