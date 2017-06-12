@@ -1,5 +1,9 @@
 <?php
     session_start();
+    include('includes/dbconnect.php');
+    $consulta = $conexao->prepare("SELECT * FROM jogos");
+    $consulta->execute();
+    $registros = $consulta->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -26,115 +30,41 @@
 
         <!-- Page Content -->
         <div class="container">
-
             <!-- Page Heading/Breadcrumbs -->
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Three Column Portfolio
-                        <small>Subheading</small>
-                    </h1>
+                    <h1 class="page-header">Jogos</h1>
                     <ol class="breadcrumb">
-                        <li><a href="index.html">Home</a>
+                        <li><a href="index.php">Home</a>
                         </li>
-                        <li class="active">Three Column Portfolio</li>
+                        <li class="active">Jogos</li>
                     </ol>
                 </div>
             </div>
             <!-- /.row -->
 
             <!-- Projects Row -->
-            <div class="row">
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="http://placehold.it/700x400" alt="">
-                    </a>
-                    <h3>
-                        <a href="portfolio-item.html">Project Name</a>
-                    </h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="http://placehold.it/700x400" alt="">
-                    </a>
-                    <h3>
-                        <a href="portfolio-item.html">Project Name</a>
-                    </h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="http://placehold.it/700x400" alt="">
-                    </a>
-                    <h3>
-                        <a href="portfolio-item.html">Project Name</a>
-                    </h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-            </div>
-            <!-- /.row -->
+            <?php
+                $counter = 0;
+                foreach ($registros as $key => $value) 
+                {
+                    $counter++;
+                    if (($counter % 3) == 0)
+                    {
+                       echo "<div class='row'>"; 
+                    }
 
-            <!-- Projects Row -->
-            <div class="row">
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="http://placehold.it/700x400" alt="">
-                    </a>
-                    <h3>
-                        <a href="portfolio-item.html">Project Name</a>
-                    </h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="http://placehold.it/700x400" alt="">
-                    </a>
-                    <h3>
-                        <a href="portfolio-item.html">Project Name</a>
-                    </h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="http://placehold.it/700x400" alt="">
-                    </a>
-                    <h3>
-                        <a href="portfolio-item.html">Project Name</a>
-                    </h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-            </div>
-
-            <!-- Projects Row -->
-            <div class="row">
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="http://placehold.it/700x400" alt="">
-                    </a>
-                    <h3>
-                        <a href="portfolio-item.html">Project Name</a>
-                    </h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="http://placehold.it/700x400" alt="">
-                    </a>
-                    <h3>
-                        <a href="portfolio-item.html">Project Name</a>
-                    </h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-                <div class="col-md-4 img-portfolio">
-                    <a href="portfolio-item.html">
-                        <img class="img-responsive img-hover" src="http://placehold.it/700x400" alt="">
-                    </a>
-                    <h3>
-                        <a href="portfolio-item.html">Project Name</a>
-                    </h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-            </div>
+                    echo    "<div class='col-md-4 img-portfolio'>";
+                    echo        "<a href='jogo.php?id=".$value['jogoID']."'><img class='img-responsive img-hover' src='".$value['jogoImage']."' alt='".$value['jogoName']."'></a>";
+                    echo        "<h3><a href='jogo.php'>".$value['jogoName']."</a></h3>";
+                    echo    "</div>";
+                    
+                    if (($counter % 3) == 0)
+                    {
+                       echo "</div>";
+                    }
+                }
+            ?>
             <!-- /.row -->
 
             <hr>
@@ -181,7 +111,5 @@
 
         <script src="js/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
-
     </body>
-
 </html>

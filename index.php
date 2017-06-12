@@ -75,32 +75,32 @@
 	        <!-- Portfolio Section -->
 	        <div class="row">
 	            <div class="col-md-4 col-sm-6">
-	                <a href="portfolio-item.html">
+	                <a href="jogo.php">
 	                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
 	                </a>
 	            </div>
 	            <div class="col-md-4 col-sm-6">
-	                <a href="portfolio-item.html">
+	                <a href="jogo.php">
 	                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
 	                </a>
 	            </div>
 	            <div class="col-md-4 col-sm-6">
-	                <a href="portfolio-item.html">
+	                <a href="jogo.php">
 	                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
 	                </a>
 	            </div>
 	            <div class="col-md-4 col-sm-6">
-	                <a href="portfolio-item.html">
+	                <a href="jogo.php">
 	                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
 	                </a>
 	            </div>
 	            <div class="col-md-4 col-sm-6">
-	                <a href="portfolio-item.html">
+	                <a href="jogo.php">
 	                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
 	                </a>
 	            </div>
 	            <div class="col-md-4 col-sm-6">
-	                <a href="portfolio-item.html">
+	                <a href="jogo.php">
 	                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
 	                </a>
 	            </div>
