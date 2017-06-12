@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 12-Jun-2017 às 16:52
+-- Generation Time: 13-Jun-2017 às 01:50
 -- Versão do servidor: 5.6.26
 -- PHP Version: 5.5.28
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `jogos` (
   `jogoDescription` varchar(1000) NOT NULL,
   `jogoPrice` decimal(10,2) NOT NULL,
   `jogoImage` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `jogos`
@@ -47,7 +47,11 @@ INSERT INTO `jogos` (`jogoID`, `jogoName`, `jogoCategory`, `jogoDescription`, `j
 (5, 'Fallout: New Vegas', 'Adventure RPG', 'Welcome to Vegas. New Vegas. Enjoy your stay!', '20.00', 'images/jogos/FalloutNewVegas.jpg'),
 (6, 'Chivalry: Medieval Warfare', 'Adventure RPG', 'Besiege castles and raid villages in Chivalry: Medieval Warfare, a fast-paced medieval first person slasher with a focus on multiplayer battles.', '45.00', 'images/jogos/ChivalryMedievalWarfare.jpg'),
 (7, 'Final Fantasy XIV Online', 'Adventure RPG', 'FINAL FANTASY® XIV: A Realm Reborn™ is a massively multiplayer online role-playing game (MMORPG) for Windows® PC, PlayStation®3 and PlayStation®4 that invites you to explore the realm of Eorzea with friends from around the world.', '50.00', 'images/jogos/FinalFantasyXIVOnline.jpg'),
-(8, 'Counter Strike Global Offensive', 'First Person Shooter', 'Counter-Strike: Global Offensive (CS: GO) expandirá na jogabilidade de ação baseada em equipes na qual foi pioneiro quando foi lançado há 12 anos. CS: GO contém novos mapas, personagens e armas, além de conter versões atualizadas de conteúdos do CS clássico (como de_dust).', '25.00', 'images/jogos/CounterStrikeGlobalOffensive.jpg');
+(8, 'Counter Strike Global Offensive', 'First Person Shooter', 'Counter-Strike: Global Offensive (CS: GO) expandirá na jogabilidade de ação baseada em equipes na qual foi pioneiro quando foi lançado há 12 anos. CS: GO contém novos mapas, personagens e armas, além de conter versões atualizadas de conteúdos do CS clássico (como de_dust).', '25.00', 'images/jogos/CounterStrikeGlobalOffensive.jpg'),
+(9, 'Garry''s Mod', 'Simulador', 'Garry''s Mod is a physics sandbox. There aren''t any predefined aims or goals. We give you the tools and leave you to play.', '20.00', 'images/jogos/GarrysMod.jpg'),
+(10, 'Full Throttle Remastered', 'Adventure RPG', 'Lançado pela LucasArts em 1995, Full Throttle é uma aventura gráfica clássica do lendário Tim Schafer. O jogo conta a história de Ben Throttle, o líder brigão da gangue de motoqueiros Polecats, que se vê metido em uma história de motos, massacres e morte.', '28.00', 'images/jogos/FullThrottleRemastered.jpg'),
+(11, 'Grand Theft Auto V', 'Simulador', 'Um malandro de rua, um ladrão de bancos aposentado e um psicopata aterrorizante devem realizar uma série de golpes ousados para sobreviver em uma cidade implacável onde não podem confiar em ninguém, nem mesmo um no outro.', '100.00', 'images/jogos/GrandTheftAutoV.jpg'),
+(12, 'Mount & Blade: Warband', 'Simulador', 'In a land torn asunder by incessant warfare, it is time to assemble your own band of hardened warriors and enter the fray. Lead your men into battle, expand your realm, and claim the ultimate prize: the throne of Calradia!', '30.00', 'images/jogos/MountAndBladeWarband.jpg');
 
 --
 -- Acionadores `jogos`
@@ -88,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `jogos_log` (
   `newJogoDescription` varchar(1000) DEFAULT NULL,
   `newJogoPrice` decimal(10,2) DEFAULT NULL,
   `newJogoImage` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `jogos_log`
@@ -96,7 +100,12 @@ CREATE TABLE IF NOT EXISTS `jogos_log` (
 
 INSERT INTO `jogos_log` (`logID`, `logData`, `evento`, `oldJogoName`, `oldJogoCategory`, `oldJogoDescription`, `oldJogoPrice`, `oldJogoImage`, `newJogoName`, `newJogoCategory`, `newJogoDescription`, `newJogoPrice`, `newJogoImage`) VALUES
 (1, '2017-06-12 11:45:46', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Final Fantasy XIV Online', 'Adventure RPG', 'FINAL FANTASY® XIV: A Realm Reborn™ is a massively multiplayer online role-playing game (MMORPG) for Windows® PC, PlayStation®3 and PlayStation®4 that invites you to explore the realm of Eorzea with friends from around the world.', '50.00', 'images/jogos/FinalFantasyXIVOnline.jpg'),
-(2, '2017-06-12 11:49:24', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Counter Strike Global Offensive', 'First Person Shooter', 'Counter-Strike: Global Offensive (CS: GO) expandirá na jogabilidade de ação baseada em equipes na qual foi pioneiro quando foi lançado há 12 anos. CS: GO contém novos mapas, personagens e armas, além de conter versões atualizadas de conteúdos do CS clássico (como de_dust).', '25.00', 'images/jogos/CounterStrikeGlobalOffensive.jpg');
+(2, '2017-06-12 11:49:24', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Counter Strike Global Offensive', 'First Person Shooter', 'Counter-Strike: Global Offensive (CS: GO) expandirá na jogabilidade de ação baseada em equipes na qual foi pioneiro quando foi lançado há 12 anos. CS: GO contém novos mapas, personagens e armas, além de conter versões atualizadas de conteúdos do CS clássico (como de_dust).', '25.00', 'images/jogos/CounterStrikeGlobalOffensive.jpg'),
+(3, '2017-06-12 19:16:01', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Garry''s Mod', 'Simulador', 'Garry''s Mod is a physics sandbox. There aren''t any predefined aims or goals. We give you the tools and leave you to play.', '20.00', 'images/jogos/GarrysMod.jpg'),
+(4, '2017-06-12 19:17:23', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Full Throttle Remastered', 'Adventure RPG', 'Lançado pela LucasArts em 1995, Full Throttle é uma aventura gráfica clássica do lendário Tim Schafer. O jogo conta a história de Ben Throttle, o líder brigão da gangue de motoqueiros Polecats, que se vê metido em uma história de motos, massacres e morte.', '28.00', 'images/jogos/FullThrottleRemastered.jpg'),
+(5, '2017-06-12 19:18:12', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Grand Theft Auto V', 'Simulador', 'Um malandro de rua, um ladrão de bancos aposentado e um psicopata aterrorizante devem realizar uma série de golpes ousados para sobreviver em uma cidade implacável onde não podem confiar em ninguém, nem mesmo um no outro.', '100.00', NULL),
+(6, '2017-06-12 19:18:19', 'Update', 'Grand Theft Auto V', 'Simulador', 'Um malandro de rua, um ladrão de bancos aposentado e um psicopata aterrorizante devem realizar uma série de golpes ousados para sobreviver em uma cidade implacável onde não podem confiar em ninguém, nem mesmo um no outro.', '100.00', NULL, 'Grand Theft Auto V', 'Simulador', 'Um malandro de rua, um ladrão de bancos aposentado e um psicopata aterrorizante devem realizar uma série de golpes ousados para sobreviver em uma cidade implacável onde não podem confiar em ninguém, nem mesmo um no outro.', '100.00', 'images/jogos/GrandTheftAutoV.jpg'),
+(7, '2017-06-12 19:19:46', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Mount & Blade: Warband', 'Simulador', 'In a land torn asunder by incessant warfare, it is time to assemble your own band of hardened warriors and enter the fray. Lead your men into battle, expand your realm, and claim the ultimate prize: the throne of Calradia!', '30.00', 'images/jogos/MountAndBladeWarband.jpg');
 
 -- --------------------------------------------------------
 
@@ -225,12 +234,12 @@ ALTER TABLE `usuarios_log`
 -- AUTO_INCREMENT for table `jogos`
 --
 ALTER TABLE `jogos`
-  MODIFY `jogoID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `jogoID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `jogos_log`
 --
 ALTER TABLE `jogos_log`
-  MODIFY `logID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `logID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `log`
 --
