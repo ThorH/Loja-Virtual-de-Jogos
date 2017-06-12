@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.4.14
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 12-Jun-2017 às 04:10
--- Versão do servidor: 10.1.9-MariaDB
--- PHP Version: 5.6.15
+-- Generation Time: 12-Jun-2017 às 15:39
+-- Versão do servidor: 5.6.26
+-- PHP Version: 5.5.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -26,14 +26,14 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `jogos`
 --
 
-CREATE TABLE `jogos` (
+CREATE TABLE IF NOT EXISTS `jogos` (
   `jogoID` int(11) NOT NULL,
   `jogoName` varchar(100) NOT NULL,
   `jogoCategory` varchar(100) NOT NULL,
   `jogoDescription` varchar(1000) NOT NULL,
   `jogoPrice` decimal(10,2) NOT NULL,
   `jogoImage` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `jogos`
@@ -51,13 +51,36 @@ INSERT INTO `jogos` (`jogoID`, `jogoName`, `jogoCategory`, `jogoDescription`, `j
 -- Acionadores `jogos`
 --
 DELIMITER $$
-CREATE TRIGGER `delete_jogos` BEFORE DELETE ON `jogos` FOR EACH ROW INSERT INTO log (Evento, Descricao) Values ("Deletado", concat("Jogo ",old.jogoName))
+CREATE TRIGGER `delete_jogos` BEFORE DELETE ON `jogos`
+ FOR EACH ROW INSERT INTO log (Evento, Descricao) Values ("Deletado", concat("Jogo ",old.jogoName))
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insert_jogos` AFTER INSERT ON `jogos` FOR EACH ROW INSERT INTO log (Evento, Descricao) Values ("Inserido", concat("Jogo ", new.jogoName))
+CREATE TRIGGER `insert_jogos` AFTER INSERT ON `jogos`
+ FOR EACH ROW INSERT INTO log (Evento, Descricao) Values ("Inserido", concat("Jogo ", new.jogoName))
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `jogos_log`
+--
+
+CREATE TABLE IF NOT EXISTS `jogos_log` (
+  `logID` int(11) NOT NULL,
+  `logData` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `oldJogoName` varchar(100) NOT NULL,
+  `oldJogoCategory` varchar(100) NOT NULL,
+  `oldJogoDescription` varchar(100) NOT NULL,
+  `oldJogoPrice` decimal(10,2) NOT NULL,
+  `oldJogoImage` varchar(100) DEFAULT NULL,
+  `newJogoName` varchar(100) NOT NULL,
+  `newJogoCategory` varchar(100) NOT NULL,
+  `newJogoDescription` varchar(100) NOT NULL,
+  `newJogoPrice` decimal(10,2) NOT NULL,
+  `newJogoImage` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -65,12 +88,12 @@ DELIMITER ;
 -- Estrutura da tabela `log`
 --
 
-CREATE TABLE `log` (
+CREATE TABLE IF NOT EXISTS `log` (
   `Data` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Evento` varchar(10) NOT NULL,
   `Descricao` varchar(50) NOT NULL,
   `idLog` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `log`
@@ -89,12 +112,12 @@ INSERT INTO `log` (`Data`, `Evento`, `Descricao`, `idLog`) VALUES
 -- Estrutura da tabela `usuarios`
 --
 
-CREATE TABLE `usuarios` (
+CREATE TABLE IF NOT EXISTS `usuarios` (
   `userID` int(11) NOT NULL,
   `userName` varchar(100) NOT NULL,
   `userEmail` varchar(100) NOT NULL,
   `userPassword` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `usuarios`
@@ -110,13 +133,32 @@ INSERT INTO `usuarios` (`userID`, `userName`, `userEmail`, `userPassword`) VALUE
 -- Acionadores `usuarios`
 --
 DELIMITER $$
-CREATE TRIGGER `delete_usuarios` BEFORE DELETE ON `usuarios` FOR EACH ROW INSERT INTO log (Evento, Descricao) Values ("Deletado", concat("Usuario ", old.userNAME))
+CREATE TRIGGER `delete_usuarios` BEFORE DELETE ON `usuarios`
+ FOR EACH ROW INSERT INTO log (Evento, Descricao) Values ("Deletado", concat("Usuario ", old.userNAME))
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insert_usuarios` AFTER INSERT ON `usuarios` FOR EACH ROW INSERT INTO log (Evento, Descricao) Values ("Inserido",concat("Usuario ",new.userName))
+CREATE TRIGGER `insert_usuarios` AFTER INSERT ON `usuarios`
+ FOR EACH ROW INSERT INTO log (Evento, Descricao) Values ("Inserido",concat("Usuario ",new.userName))
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `usuarios_log`
+--
+
+CREATE TABLE IF NOT EXISTS `usuarios_log` (
+  `logID` int(11) NOT NULL,
+  `logData` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `oldUserName` varchar(100) NOT NULL,
+  `oldUserEmail` varchar(100) NOT NULL,
+  `oldUserPassword` varchar(100) NOT NULL,
+  `newUserName` varchar(100) NOT NULL,
+  `newUserEmail` varchar(100) NOT NULL,
+  `newUserPassword` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
@@ -127,6 +169,12 @@ DELIMITER ;
 --
 ALTER TABLE `jogos`
   ADD PRIMARY KEY (`jogoID`);
+
+--
+-- Indexes for table `jogos_log`
+--
+ALTER TABLE `jogos_log`
+  ADD PRIMARY KEY (`logID`);
 
 --
 -- Indexes for table `log`
@@ -142,6 +190,12 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `userName` (`userName`);
 
 --
+-- Indexes for table `usuarios_log`
+--
+ALTER TABLE `usuarios_log`
+  ADD PRIMARY KEY (`logID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -149,17 +203,27 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `jogos`
 --
 ALTER TABLE `jogos`
-  MODIFY `jogoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `jogoID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `jogos_log`
+--
+ALTER TABLE `jogos_log`
+  MODIFY `logID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `usuarios_log`
+--
+ALTER TABLE `usuarios_log`
+  MODIFY `logID` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
