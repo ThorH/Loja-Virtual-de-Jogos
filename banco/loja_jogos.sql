@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 12-Jun-2017 às 16:38
+-- Generation Time: 12-Jun-2017 às 16:52
 -- Versão do servidor: 5.6.26
 -- PHP Version: 5.5.28
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `jogos` (
   `jogoDescription` varchar(1000) NOT NULL,
   `jogoPrice` decimal(10,2) NOT NULL,
   `jogoImage` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `jogos`
@@ -45,7 +45,9 @@ INSERT INTO `jogos` (`jogoID`, `jogoName`, `jogoCategory`, `jogoDescription`, `j
 (3, 'The Elder Scrolls V: Skyrim', 'Adventure RPG', 'The next chapter in the highly anticipated Elder Scrolls saga arrives from the makers of the 2006 and 2008 Games of the Year, Bethesda Game Studios. Skyrim reimagines and revolutionizes the open-world fantasy epic, bringing to life a complete virtual world open for you to explore any way you choose.', '40.00', 'images/jogos/Skyrim.jpg'),
 (4, 'Tabletop Simulator', 'Simulador', 'Tabletop Simulator is the only simulator where you can let your aggression out by flipping the table! There are no rules to follow: just you, a physics sandbox, and your friends. Make your own games and play how YOU want! Unlimited gaming possibilities!', '36.00', 'images/jogos/TabletopSimulator.jpg'),
 (5, 'Fallout: New Vegas', 'Adventure RPG', 'Welcome to Vegas. New Vegas. Enjoy your stay!', '20.00', 'images/jogos/FalloutNewVegas.jpg'),
-(6, 'Chivalry: Medieval Warfare', 'Adventure RPG', 'Besiege castles and raid villages in Chivalry: Medieval Warfare, a fast-paced medieval first person slasher with a focus on multiplayer battles.', '45.00', 'images/jogos/ChivalryMedievalWarfare.jpg');
+(6, 'Chivalry: Medieval Warfare', 'Adventure RPG', 'Besiege castles and raid villages in Chivalry: Medieval Warfare, a fast-paced medieval first person slasher with a focus on multiplayer battles.', '45.00', 'images/jogos/ChivalryMedievalWarfare.jpg'),
+(7, 'Final Fantasy XIV Online', 'Adventure RPG', 'FINAL FANTASY® XIV: A Realm Reborn™ is a massively multiplayer online role-playing game (MMORPG) for Windows® PC, PlayStation®3 and PlayStation®4 that invites you to explore the realm of Eorzea with friends from around the world.', '50.00', 'images/jogos/FinalFantasyXIVOnline.jpg'),
+(8, 'Counter Strike Global Offensive', 'First Person Shooter', 'Counter-Strike: Global Offensive (CS: GO) expandirá na jogabilidade de ação baseada em equipes na qual foi pioneiro quando foi lançado há 12 anos. CS: GO contém novos mapas, personagens e armas, além de conter versões atualizadas de conteúdos do CS clássico (como de_dust).', '25.00', 'images/jogos/CounterStrikeGlobalOffensive.jpg');
 
 --
 -- Acionadores `jogos`
@@ -75,18 +77,26 @@ DELIMITER ;
 CREATE TABLE IF NOT EXISTS `jogos_log` (
   `logID` int(11) NOT NULL,
   `logData` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `evento` varchar(15) NOT NULL,
-  `oldJogoName` varchar(100) NOT NULL,
-  `oldJogoCategory` varchar(100) NOT NULL,
-  `oldJogoDescription` varchar(100) NOT NULL,
-  `oldJogoPrice` decimal(10,2) NOT NULL,
+  `evento` varchar(15) DEFAULT NULL,
+  `oldJogoName` varchar(100) DEFAULT NULL,
+  `oldJogoCategory` varchar(100) DEFAULT NULL,
+  `oldJogoDescription` varchar(1000) DEFAULT NULL,
+  `oldJogoPrice` decimal(10,2) DEFAULT NULL,
   `oldJogoImage` varchar(100) DEFAULT NULL,
-  `newJogoName` varchar(100) NOT NULL,
-  `newJogoCategory` varchar(100) NOT NULL,
-  `newJogoDescription` varchar(100) NOT NULL,
-  `newJogoPrice` decimal(10,2) NOT NULL,
+  `newJogoName` varchar(100) DEFAULT NULL,
+  `newJogoCategory` varchar(100) DEFAULT NULL,
+  `newJogoDescription` varchar(1000) DEFAULT NULL,
+  `newJogoPrice` decimal(10,2) DEFAULT NULL,
   `newJogoImage` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `jogos_log`
+--
+
+INSERT INTO `jogos_log` (`logID`, `logData`, `evento`, `oldJogoName`, `oldJogoCategory`, `oldJogoDescription`, `oldJogoPrice`, `oldJogoImage`, `newJogoName`, `newJogoCategory`, `newJogoDescription`, `newJogoPrice`, `newJogoImage`) VALUES
+(1, '2017-06-12 11:45:46', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Final Fantasy XIV Online', 'Adventure RPG', 'FINAL FANTASY® XIV: A Realm Reborn™ is a massively multiplayer online role-playing game (MMORPG) for Windows® PC, PlayStation®3 and PlayStation®4 that invites you to explore the realm of Eorzea with friends from around the world.', '50.00', 'images/jogos/FinalFantasyXIVOnline.jpg'),
+(2, '2017-06-12 11:49:24', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Counter Strike Global Offensive', 'First Person Shooter', 'Counter-Strike: Global Offensive (CS: GO) expandirá na jogabilidade de ação baseada em equipes na qual foi pioneiro quando foi lançado há 12 anos. CS: GO contém novos mapas, personagens e armas, além de conter versões atualizadas de conteúdos do CS clássico (como de_dust).', '25.00', 'images/jogos/CounterStrikeGlobalOffensive.jpg');
 
 -- --------------------------------------------------------
 
@@ -215,12 +225,12 @@ ALTER TABLE `usuarios_log`
 -- AUTO_INCREMENT for table `jogos`
 --
 ALTER TABLE `jogos`
-  MODIFY `jogoID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `jogoID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `jogos_log`
 --
 ALTER TABLE `jogos_log`
-  MODIFY `logID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `logID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `log`
 --
