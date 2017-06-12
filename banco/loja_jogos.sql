@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 12-Jun-2017 às 15:39
+-- Generation Time: 12-Jun-2017 às 16:38
 -- Versão do servidor: 5.6.26
 -- PHP Version: 5.5.28
 
@@ -52,12 +52,17 @@ INSERT INTO `jogos` (`jogoID`, `jogoName`, `jogoCategory`, `jogoDescription`, `j
 --
 DELIMITER $$
 CREATE TRIGGER `delete_jogos` BEFORE DELETE ON `jogos`
- FOR EACH ROW INSERT INTO log (Evento, Descricao) Values ("Deletado", concat("Jogo ",old.jogoName))
+ FOR EACH ROW INSERT INTO jogos_log (evento, oldJogoName, oldJogoCategory, oldJogoDescription, oldJogoPrice, oldJogoImage) Values ("Deletado", old.jogoName, old.jogoCategory, old.jogoDescription, old.jogoPrice, old.jogoImage)
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `insert_jogos` AFTER INSERT ON `jogos`
- FOR EACH ROW INSERT INTO log (Evento, Descricao) Values ("Inserido", concat("Jogo ", new.jogoName))
+ FOR EACH ROW INSERT INTO jogos_log (evento, newJogoName, newJogoCategory, newJogoDescription, newJogoPrice, newJogoImage) Values ("Inserido", new.jogoName, new.jogoCategory, new.jogoDescription, new.jogoPrice, new.jogoImage)
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_jogos` BEFORE UPDATE ON `jogos`
+ FOR EACH ROW insert into jogos_log(evento, oldJogoName, oldJogoCategory, oldJogoDescription, oldJogoPrice, oldJogoImage, newJogoName, newJogoCategory, newJogoDescription, newJogoPrice, newJogoImage) values ("Update", old.jogoName, old.jogoCategory, old.jogoDescription, old.jogoPrice, old.jogoImage, new.jogoName, new.jogoCategory, new.jogoDescription, new.jogoPrice, new.jogoImage)
 $$
 DELIMITER ;
 
@@ -70,6 +75,7 @@ DELIMITER ;
 CREATE TABLE IF NOT EXISTS `jogos_log` (
   `logID` int(11) NOT NULL,
   `logData` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `evento` varchar(15) NOT NULL,
   `oldJogoName` varchar(100) NOT NULL,
   `oldJogoCategory` varchar(100) NOT NULL,
   `oldJogoDescription` varchar(100) NOT NULL,
@@ -134,12 +140,17 @@ INSERT INTO `usuarios` (`userID`, `userName`, `userEmail`, `userPassword`) VALUE
 --
 DELIMITER $$
 CREATE TRIGGER `delete_usuarios` BEFORE DELETE ON `usuarios`
- FOR EACH ROW INSERT INTO log (Evento, Descricao) Values ("Deletado", concat("Usuario ", old.userNAME))
+ FOR EACH ROW insert into usuarios_log(evento, oldUserName, oldUserEmail, oldUserPassword) values ("Deletado", old.userName, old.userEmail, old.userPassword)
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `insert_usuarios` AFTER INSERT ON `usuarios`
- FOR EACH ROW INSERT INTO log (Evento, Descricao) Values ("Inserido",concat("Usuario ",new.userName))
+ FOR EACH ROW insert into usuarios_log(evento, newUserName, newUserEmail, newUserPassword) values ("Inserido", new.userName, new.userEmail, new.userPassword)
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_usuario` BEFORE UPDATE ON `usuarios`
+ FOR EACH ROW insert into usuarios_log(evento, oldUserName, oldUserEmail, oldUserPassword, newUserName, newUserEmail, newUserPassword) values ("Update", old.userName, old.userEmail, old.userPassword, new.userName, new.userEmail, new.userPassword)
 $$
 DELIMITER ;
 
@@ -152,6 +163,7 @@ DELIMITER ;
 CREATE TABLE IF NOT EXISTS `usuarios_log` (
   `logID` int(11) NOT NULL,
   `logData` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `evento` varchar(15) NOT NULL,
   `oldUserName` varchar(100) NOT NULL,
   `oldUserEmail` varchar(100) NOT NULL,
   `oldUserPassword` varchar(100) NOT NULL,
