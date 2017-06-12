@@ -24,11 +24,8 @@
 	</head>
 
 	<body>
-	
 	    <!-- Navigation -->
-	    <?php
-	    	include "includes/adminNavigation.php";
-	    ?>
+	    <?php include "includes/adminNavigation.php"; ?>
 
 	    <!-- Page Content -->
 	    <div class="container">

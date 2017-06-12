@@ -57,11 +57,8 @@
 	</head>
 
 	<body>
-	
 	    <!-- Navigation -->
-	    <?php
-	    	include "includes/homeNavigation.php";
-	    ?>
+	    <?php include "includes/homeNavigation.php"; ?>
 		
 	    <!-- Page Content -->
 	    <div class="container">
@@ -112,10 +109,9 @@
 					</form>
 				</div>
 			</div>
+			
 	        <!-- Footer -->
-		    <?php
-		    	include "includes/footer.php";
-		    ?>
+		    <?php include "includes/footer.php"; ?>
 	    </div>
 	    <!-- /.container -->
 	

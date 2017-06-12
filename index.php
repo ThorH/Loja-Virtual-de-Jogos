@@ -1,5 +1,9 @@
 <?php
 	session_start();
+    include('includes/dbconnect.php');
+    $consulta = $conexao->prepare("SELECT * FROM jogos ORDER BY jogoID DESC LIMIT 6");
+    $consulta->execute();
+    $registros = $consulta->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -18,11 +22,8 @@
 	</head>
 
 	<body>
-	
 	    <!-- Navigation -->
-	    <?php
-	    	include "includes/homeNavigation.php";
-	    ?>
+	    <?php include "includes/homeNavigation.php"; ?>
 	
 	    <!-- Header Carousel -->
 	    <header id="myCarousel" class="carousel slide">
@@ -74,46 +75,21 @@
 	
 	        <!-- Portfolio Section -->
 	        <div class="row">
-	            <div class="col-md-4 col-sm-6">
-	                <a href="jogo.php">
-	                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-	                </a>
-	            </div>
-	            <div class="col-md-4 col-sm-6">
-	                <a href="jogo.php">
-	                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-	                </a>
-	            </div>
-	            <div class="col-md-4 col-sm-6">
-	                <a href="jogo.php">
-	                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-	                </a>
-	            </div>
-	            <div class="col-md-4 col-sm-6">
-	                <a href="jogo.php">
-	                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-	                </a>
-	            </div>
-	            <div class="col-md-4 col-sm-6">
-	                <a href="jogo.php">
-	                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-	                </a>
-	            </div>
-	            <div class="col-md-4 col-sm-6">
-	                <a href="jogo.php">
-	                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-	                </a>
-	            </div>
+	        	<?php
+	        		foreach ($registros as $key => $value) 
+	        		{
+		        		echo "<div class='col-md-4 col-sm-6'>";
+		        		echo 	"<a href='jogo.php?id=".$value['jogoID']."'><img class='img-responsive img-portfolio img-hover' src='".$value['jogoImage']."' alt='".$value['jogoName']."'></a>";
+		        		echo "</div>";
+	        		}
+	        	?>
 	        </div>
 	        <!-- /.row -->
 	
 	        <hr>
 	
 	        <!-- Footer -->
-			<?php
-				include 'includes/footer.php';
-			?>
-			
+			<?php include 'includes/footer.php'; ?>
 	    </div>
 	    <!-- /.container -->
 	

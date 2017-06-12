@@ -32,11 +32,8 @@
     </head>
 
     <body>
-
         <!-- Navigation -->
-        <?php
-            include "includes/homeNavigation.php";
-        ?>
+        <?php include "includes/homeNavigation.php"; ?>
 
         <!-- Page Content -->
         <div class="container">
@@ -60,7 +57,7 @@
                         <!-- Wrapper for slides -->
                         <div class="carousel-inner">
                             <div class="item active">
-                                <?php echo "<img class='img-responsive fill' src='".$jogoImage."' alt='".$jogoName."'>" ?>
+                                <?php echo "<img class='img-responsive fill' src='".$jogoImage."' alt='".$jogoName."' style='width: 100%;'>" ?>
                             </div>
                         </div>
                     </div>
@@ -81,9 +78,7 @@
             <hr>
 
             <!-- Footer -->
-            <?php
-                include 'includes/footer.php';
-            ?>
+            <?php include 'includes/footer.php'; ?>
         </div>
         <!-- /.container -->
 

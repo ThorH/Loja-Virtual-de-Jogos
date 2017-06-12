@@ -161,11 +161,8 @@
 	?>
 
 	<body>
-	
 	    <!-- Navigation -->
-	    <?php
-	    	include("includes/adminNavigation.php");
-	    ?>
+	    <?php include("includes/adminNavigation.php"); ?>
 
 	    <!-- Page Content -->
 	    <div class="container dataTable">
@@ -298,9 +295,7 @@
 			</div>
 	
 	        <!-- Footer -->
-		    <?php
-		    	include("includes/footer.php");
-		    ?>
+		    <?php include("includes/footer.php"); ?>
 	    </div>
 	
 	    <script src="js/jquery.js"></script>
