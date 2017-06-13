@@ -27,6 +27,7 @@
 
 	<?php	
 		include ("includes/dbconnect.php");
+		$alertMessage = "";
 
 		if (isset($_POST["userName"]))
 		{
@@ -44,11 +45,11 @@
 				
 				if ($resultado == 0)
 				{
-					echo "erro ao atualizar";
+					$alertMessage = "Falha ao atualizar o registro.";
 				}
 				else
 				{
-					echo "atualizado com sucesso";
+					$alertMessage = "Registro atualizado com sucesso!";
 				}
 			}
 			else //insert
@@ -64,11 +65,11 @@
 				
 				if($resultado == 0)
 				{
-					echo "erro inserir";
+					$alertMessage = "Falha ao inserir o novo registro.";
 				}
 				else
 				{
-					echo "inserido com sucesso";
+					$alertMessage = "Registro inserido com sucesso!";
 				}
 			}
 		}
@@ -83,11 +84,11 @@
 			
 			if($resultado == 0)
 			{
-				echo "erro ao deletar";
+				$alertMessage = "Falha ao deletar o registro!";
 			}
 			else
 			{
-				echo "deletado com sucesso";
+				$alertMessage = "Registro deletado com sucesso!";
 			}
 		}
 
@@ -135,7 +136,7 @@
 	    	
 			<div class="remodal" data-remodal-id="editModal">
 				<button data-remodal-action="close" class="remodal-close"></button>
-				<form action="listUsers.php" class="well form-horizontal" method="post" id="registerForm">
+				<form action="listUsers.php#alertModal" class="well form-horizontal" method="post" id="registerForm">
 					<fieldset>
 						<!-- Form Name -->
 						<legend id="modalTitle" class="text-center"></legend>
@@ -189,7 +190,7 @@
 			</div>
 			
 			<div class="remodal" data-remodal-id="deleteModal">
-				<form action="listUsers.php" method="post">
+				<form action="listUsers.php#alertModal" method="post">
 					<input type="hidden" name="userID" value="">
 					<button data-remodal-action="close" class="remodal-close"></button>
 					<h2>Deseja deletar este usuário?</h2>
@@ -198,6 +199,13 @@
 					<button data-remodal-action="cancel" class="remodal-cancel">Não</button>
 					<button type="submit" class="remodal-confirm">Sim</button>
 				</form>
+			</div>
+
+			<div class="remodal" data-remodal-id="alertModal">
+				<button data-remodal-action="close" class="remodal-close"></button>
+				<h2><?php echo $alertMessage; ?></h2>
+				<br>
+				<button data-remodal-action="confirm" class="remodal-confirm">OK</button>
 			</div>
 	
 	        <!-- Footer -->

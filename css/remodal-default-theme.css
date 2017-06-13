@@ -43,7 +43,7 @@
   margin-bottom: 10px;
   padding: 35px;
 
-  transform: translate3d(0, 0, 0);
+  /*transform: translate3d(0, 0, 0); blur bug*/
 
   color: #2b2e38;
   background: #fff;
