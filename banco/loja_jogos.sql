@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.14
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 13-Jun-2017 às 01:50
--- Versão do servidor: 5.6.26
--- PHP Version: 5.5.28
+-- Generation Time: 13-Jun-2017 às 07:18
+-- Versão do servidor: 10.1.9-MariaDB
+-- PHP Version: 5.6.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -26,14 +26,14 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `jogos`
 --
 
-CREATE TABLE IF NOT EXISTS `jogos` (
+CREATE TABLE `jogos` (
   `jogoID` int(11) NOT NULL,
   `jogoName` varchar(100) NOT NULL,
   `jogoCategory` varchar(100) NOT NULL,
   `jogoDescription` varchar(1000) NOT NULL,
   `jogoPrice` decimal(10,2) NOT NULL,
   `jogoImage` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `jogos`
@@ -51,24 +51,29 @@ INSERT INTO `jogos` (`jogoID`, `jogoName`, `jogoCategory`, `jogoDescription`, `j
 (9, 'Garry''s Mod', 'Simulador', 'Garry''s Mod is a physics sandbox. There aren''t any predefined aims or goals. We give you the tools and leave you to play.', '20.00', 'images/jogos/GarrysMod.jpg'),
 (10, 'Full Throttle Remastered', 'Adventure RPG', 'Lançado pela LucasArts em 1995, Full Throttle é uma aventura gráfica clássica do lendário Tim Schafer. O jogo conta a história de Ben Throttle, o líder brigão da gangue de motoqueiros Polecats, que se vê metido em uma história de motos, massacres e morte.', '28.00', 'images/jogos/FullThrottleRemastered.jpg'),
 (11, 'Grand Theft Auto V', 'Simulador', 'Um malandro de rua, um ladrão de bancos aposentado e um psicopata aterrorizante devem realizar uma série de golpes ousados para sobreviver em uma cidade implacável onde não podem confiar em ninguém, nem mesmo um no outro.', '100.00', 'images/jogos/GrandTheftAutoV.jpg'),
-(12, 'Mount & Blade: Warband', 'Simulador', 'In a land torn asunder by incessant warfare, it is time to assemble your own band of hardened warriors and enter the fray. Lead your men into battle, expand your realm, and claim the ultimate prize: the throne of Calradia!', '30.00', 'images/jogos/MountAndBladeWarband.jpg');
+(12, 'Mount & Blade: Warband', 'Simulador', 'In a land torn asunder by incessant warfare, it is time to assemble your own band of hardened warriors and enter the fray. Lead your men into battle, expand your realm, and claim the ultimate prize: the throne of Calradia!', '30.00', 'images/jogos/MountAndBladeWarband.jpg'),
+(13, 'Age of Empires® III: Complete Collection', 'Adventure RPG', 'Microsoft Studios brings you three epic Age of Empires III games in one monumental collection for the first time.', '70.00', 'images/jogos/AgeOfEmpiresIIICompleteCollection.jpg'),
+(14, 'Sid Meier''s Civilization® V', 'Simulador', 'Create, discover, and download new player-created maps, scenarios, interfaces, and more!', '45.00', 'images/jogos/SidMeiersCivilizationV.jpg'),
+(15, 'Project Zomboid', 'Simulador', 'Project Zomboid is the ultimate in zombie survival. Alone or in MP: you loot, build, craft, fight, farm and fish in a struggle to survive. A hardcore RPG skillset, a vast map, a massively customisable sandbox and a cute tutorial raccoon await the unwary. So how will you die?', '25.00', 'images/jogos/Project Zomboid.jpg'),
+(16, 'Terraria', 'Simulador', 'Dig, fight, explore, build! Nothing is impossible in this action-packed adventure game. Four Pack also available!', '20.00', 'images/jogos/Terraria.jpg'),
+(17, 'L.A. Noire', 'First Person Shooter', 'L.A. Noire is a violent crime thriller that blends breathtaking action with true detective work to deliver an unprecedented interactive experience. Search for clues, chase down suspects and interrogate witnesses as you struggle to find the truth in a city where everyone has something to hide.', '30.00', 'images/jogos/LANoire.jpg'),
+(18, 'Kerbal Space Program', 'Simulador', 'In KSP you must build a space-worthy craft, capable of flying its crew out into space without killing them. At your disposal is a collection of parts, which must be assembled to create a functional ship. Each part has its own function and will affect the way a ship flies (or doesn''t). So strap yourself in, and get ready to try some Rocket Science!', '73.00', 'images/jogos/KerbalSpaceProgram.jpg'),
+(19, 'Rocket League®', 'Simulador', 'Soccer meets driving once again in the long-awaited, physics-based multiplayer-focused sequel to Supersonic Acrobatic Rocket-Powered Battle-Cars! Choose a variety of high-flying vehicles equipped with huge rocket boosters to score amazing aerial goals and pull-off incredible game-changing saves!', '37.00', 'images/jogos/RocketLeague.jpg'),
+(20, 'Stardew Valley', 'Simulador', 'Você herdou a antiga fazenda do seu avô, em Stardew Valley. Com ferramentas de segunda-mão e algumas moedas, você parte para dar início a sua nova vida. Será que você vai aprender a viver da terra, a transformar esse matagal em um próspero lar?', '25.00', 'images/jogos/StardewValley.jpg');
 
 --
 -- Acionadores `jogos`
 --
 DELIMITER $$
-CREATE TRIGGER `delete_jogos` BEFORE DELETE ON `jogos`
- FOR EACH ROW INSERT INTO jogos_log (evento, oldJogoName, oldJogoCategory, oldJogoDescription, oldJogoPrice, oldJogoImage) Values ("Deletado", old.jogoName, old.jogoCategory, old.jogoDescription, old.jogoPrice, old.jogoImage)
+CREATE TRIGGER `delete_jogos` BEFORE DELETE ON `jogos` FOR EACH ROW INSERT INTO jogos_log (evento, oldJogoName, oldJogoCategory, oldJogoDescription, oldJogoPrice, oldJogoImage) Values ("Deletado", old.jogoName, old.jogoCategory, old.jogoDescription, old.jogoPrice, old.jogoImage)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insert_jogos` AFTER INSERT ON `jogos`
- FOR EACH ROW INSERT INTO jogos_log (evento, newJogoName, newJogoCategory, newJogoDescription, newJogoPrice, newJogoImage) Values ("Inserido", new.jogoName, new.jogoCategory, new.jogoDescription, new.jogoPrice, new.jogoImage)
+CREATE TRIGGER `insert_jogos` AFTER INSERT ON `jogos` FOR EACH ROW INSERT INTO jogos_log (evento, newJogoName, newJogoCategory, newJogoDescription, newJogoPrice, newJogoImage) Values ("Inserido", new.jogoName, new.jogoCategory, new.jogoDescription, new.jogoPrice, new.jogoImage)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `update_jogos` BEFORE UPDATE ON `jogos`
- FOR EACH ROW insert into jogos_log(evento, oldJogoName, oldJogoCategory, oldJogoDescription, oldJogoPrice, oldJogoImage, newJogoName, newJogoCategory, newJogoDescription, newJogoPrice, newJogoImage) values ("Update", old.jogoName, old.jogoCategory, old.jogoDescription, old.jogoPrice, old.jogoImage, new.jogoName, new.jogoCategory, new.jogoDescription, new.jogoPrice, new.jogoImage)
+CREATE TRIGGER `update_jogos` BEFORE UPDATE ON `jogos` FOR EACH ROW insert into jogos_log(evento, oldJogoName, oldJogoCategory, oldJogoDescription, oldJogoPrice, oldJogoImage, newJogoName, newJogoCategory, newJogoDescription, newJogoPrice, newJogoImage) values ("Update", old.jogoName, old.jogoCategory, old.jogoDescription, old.jogoPrice, old.jogoImage, new.jogoName, new.jogoCategory, new.jogoDescription, new.jogoPrice, new.jogoImage)
 $$
 DELIMITER ;
 
@@ -78,7 +83,7 @@ DELIMITER ;
 -- Estrutura da tabela `jogos_log`
 --
 
-CREATE TABLE IF NOT EXISTS `jogos_log` (
+CREATE TABLE `jogos_log` (
   `logID` int(11) NOT NULL,
   `logData` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `evento` varchar(15) DEFAULT NULL,
@@ -92,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `jogos_log` (
   `newJogoDescription` varchar(1000) DEFAULT NULL,
   `newJogoPrice` decimal(10,2) DEFAULT NULL,
   `newJogoImage` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `jogos_log`
@@ -105,7 +110,15 @@ INSERT INTO `jogos_log` (`logID`, `logData`, `evento`, `oldJogoName`, `oldJogoCa
 (4, '2017-06-12 19:17:23', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Full Throttle Remastered', 'Adventure RPG', 'Lançado pela LucasArts em 1995, Full Throttle é uma aventura gráfica clássica do lendário Tim Schafer. O jogo conta a história de Ben Throttle, o líder brigão da gangue de motoqueiros Polecats, que se vê metido em uma história de motos, massacres e morte.', '28.00', 'images/jogos/FullThrottleRemastered.jpg'),
 (5, '2017-06-12 19:18:12', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Grand Theft Auto V', 'Simulador', 'Um malandro de rua, um ladrão de bancos aposentado e um psicopata aterrorizante devem realizar uma série de golpes ousados para sobreviver em uma cidade implacável onde não podem confiar em ninguém, nem mesmo um no outro.', '100.00', NULL),
 (6, '2017-06-12 19:18:19', 'Update', 'Grand Theft Auto V', 'Simulador', 'Um malandro de rua, um ladrão de bancos aposentado e um psicopata aterrorizante devem realizar uma série de golpes ousados para sobreviver em uma cidade implacável onde não podem confiar em ninguém, nem mesmo um no outro.', '100.00', NULL, 'Grand Theft Auto V', 'Simulador', 'Um malandro de rua, um ladrão de bancos aposentado e um psicopata aterrorizante devem realizar uma série de golpes ousados para sobreviver em uma cidade implacável onde não podem confiar em ninguém, nem mesmo um no outro.', '100.00', 'images/jogos/GrandTheftAutoV.jpg'),
-(7, '2017-06-12 19:19:46', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Mount & Blade: Warband', 'Simulador', 'In a land torn asunder by incessant warfare, it is time to assemble your own band of hardened warriors and enter the fray. Lead your men into battle, expand your realm, and claim the ultimate prize: the throne of Calradia!', '30.00', 'images/jogos/MountAndBladeWarband.jpg');
+(7, '2017-06-12 19:19:46', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Mount & Blade: Warband', 'Simulador', 'In a land torn asunder by incessant warfare, it is time to assemble your own band of hardened warriors and enter the fray. Lead your men into battle, expand your realm, and claim the ultimate prize: the throne of Calradia!', '30.00', 'images/jogos/MountAndBladeWarband.jpg'),
+(8, '2017-06-13 01:57:08', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Age of Empires® III: Complete Collection', 'Adventure RPG', 'Microsoft Studios brings you three epic Age of Empires III games in one monumental collection for the first time.', '70.00', 'images/jogos/AgeOfEmpiresIIICompleteCollection.jpg'),
+(9, '2017-06-13 02:01:14', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Sid Meier''s Civilization® V', 'Simulador', 'Create, discover, and download new player-created maps, scenarios, interfaces, and more!', '45.00', 'images/jogos/SidMeiersCivilizationV.jpg'),
+(10, '2017-06-13 02:02:51', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Project Zomboid', 'Simulador', 'Project Zomboid is the ultimate in zombie survival. Alone or in MP: you loot, build, craft, fight, farm and fish in a struggle to survive. A hardcore RPG skillset, a vast map, a massively customisable sandbox and a cute tutorial raccoon await the unwary. So how will you die?', '25.00', 'images/jogos/Project Zomboid.jpg'),
+(11, '2017-06-13 02:03:57', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Terraria', 'Simulador', 'Dig, fight, explore, build! Nothing is impossible in this action-packed adventure game. Four Pack also available!', '20.00', 'images/jogos/Terraria.jpg'),
+(12, '2017-06-13 02:05:29', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'L.A. Noire', 'First Person Shooter', 'L.A. Noire is a violent crime thriller that blends breathtaking action with true detective work to deliver an unprecedented interactive experience. Search for clues, chase down suspects and interrogate witnesses as you struggle to find the truth in a city where everyone has something to hide.', '30.00', 'images/jogos/LANoire.jpg'),
+(13, '2017-06-13 02:06:34', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Kerbal Space Program', 'Simulador', 'In KSP you must build a space-worthy craft, capable of flying its crew out into space without killing them. At your disposal is a collection of parts, which must be assembled to create a functional ship. Each part has its own function and will affect the way a ship flies (or doesn''t). So strap yourself in, and get ready to try some Rocket Science!', '73.00', 'images/jogos/KerbalSpaceProgram.jpg'),
+(14, '2017-06-13 02:14:07', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Rocket League®', 'Simulador', 'Soccer meets driving once again in the long-awaited, physics-based multiplayer-focused sequel to Supersonic Acrobatic Rocket-Powered Battle-Cars! Choose a variety of high-flying vehicles equipped with huge rocket boosters to score amazing aerial goals and pull-off incredible game-changing saves!', '37.00', 'images/jogos/RocketLeague.jpg'),
+(15, '2017-06-13 02:16:47', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Stardew Valley', 'Simulador', 'Você herdou a antiga fazenda do seu avô, em Stardew Valley. Com ferramentas de segunda-mão e algumas moedas, você parte para dar início a sua nova vida. Será que você vai aprender a viver da terra, a transformar esse matagal em um próspero lar?', '25.00', 'images/jogos/StardewValley.jpg');
 
 -- --------------------------------------------------------
 
@@ -113,12 +126,12 @@ INSERT INTO `jogos_log` (`logID`, `logData`, `evento`, `oldJogoName`, `oldJogoCa
 -- Estrutura da tabela `log`
 --
 
-CREATE TABLE IF NOT EXISTS `log` (
+CREATE TABLE `log` (
   `Data` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Evento` varchar(10) NOT NULL,
   `Descricao` varchar(50) NOT NULL,
   `idLog` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `log`
@@ -137,12 +150,12 @@ INSERT INTO `log` (`Data`, `Evento`, `Descricao`, `idLog`) VALUES
 -- Estrutura da tabela `usuarios`
 --
 
-CREATE TABLE IF NOT EXISTS `usuarios` (
+CREATE TABLE `usuarios` (
   `userID` int(11) NOT NULL,
   `userName` varchar(100) NOT NULL,
   `userEmail` varchar(100) NOT NULL,
   `userPassword` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `usuarios`
@@ -158,18 +171,15 @@ INSERT INTO `usuarios` (`userID`, `userName`, `userEmail`, `userPassword`) VALUE
 -- Acionadores `usuarios`
 --
 DELIMITER $$
-CREATE TRIGGER `delete_usuarios` BEFORE DELETE ON `usuarios`
- FOR EACH ROW insert into usuarios_log(evento, oldUserName, oldUserEmail, oldUserPassword) values ("Deletado", old.userName, old.userEmail, old.userPassword)
+CREATE TRIGGER `delete_usuarios` BEFORE DELETE ON `usuarios` FOR EACH ROW insert into usuarios_log(evento, oldUserName, oldUserEmail, oldUserPassword) values ("Deletado", old.userName, old.userEmail, old.userPassword)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insert_usuarios` AFTER INSERT ON `usuarios`
- FOR EACH ROW insert into usuarios_log(evento, newUserName, newUserEmail, newUserPassword) values ("Inserido", new.userName, new.userEmail, new.userPassword)
+CREATE TRIGGER `insert_usuarios` AFTER INSERT ON `usuarios` FOR EACH ROW insert into usuarios_log(evento, newUserName, newUserEmail, newUserPassword) values ("Inserido", new.userName, new.userEmail, new.userPassword)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `update_usuario` BEFORE UPDATE ON `usuarios`
- FOR EACH ROW insert into usuarios_log(evento, oldUserName, oldUserEmail, oldUserPassword, newUserName, newUserEmail, newUserPassword) values ("Update", old.userName, old.userEmail, old.userPassword, new.userName, new.userEmail, new.userPassword)
+CREATE TRIGGER `update_usuario` BEFORE UPDATE ON `usuarios` FOR EACH ROW insert into usuarios_log(evento, oldUserName, oldUserEmail, oldUserPassword, newUserName, newUserEmail, newUserPassword) values ("Update", old.userName, old.userEmail, old.userPassword, new.userName, new.userEmail, new.userPassword)
 $$
 DELIMITER ;
 
@@ -179,7 +189,7 @@ DELIMITER ;
 -- Estrutura da tabela `usuarios_log`
 --
 
-CREATE TABLE IF NOT EXISTS `usuarios_log` (
+CREATE TABLE `usuarios_log` (
   `logID` int(11) NOT NULL,
   `logData` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `evento` varchar(15) NOT NULL,
@@ -234,22 +244,22 @@ ALTER TABLE `usuarios_log`
 -- AUTO_INCREMENT for table `jogos`
 --
 ALTER TABLE `jogos`
-  MODIFY `jogoID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `jogoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `jogos_log`
 --
 ALTER TABLE `jogos_log`
-  MODIFY `logID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `logID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `usuarios_log`
 --
