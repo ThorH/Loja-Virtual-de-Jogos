@@ -60,39 +60,39 @@
 
     function imprimePaginas($paginas)
     {
+        $pagina = 1;
+
+        if (isset($_GET['pagina']))
+        {
+            $pagina = $_GET['pagina'];
+        }
+
         echo "<hr>";
         echo "<div class='row text-center'>";
         echo    "<div class='col-lg-12'>";
         echo        "<ul class='pagination'>";
-        echo            "<li>";
-        echo                "<a href='#'>&laquo;</a>";
-        echo            "</li>";
+
+        if ($pagina > 1)
+        {
+            echo        "<li>";
+            echo            "<a href='jogos.php?pagina=".($pagina-1)."'>&laquo;</a>";
+            echo        "</li>";
+        }
 
         for ($i = 1; $i <= $paginas; $i++)
         {
-            if (isset($_GET['pagina']))
-            {
-                if ($_GET['pagina'] == $i)
-                {
-                    echo "<li class='active'>";
-                }
-                else
-                {
-                    echo "<li>";
-                }
-            }    
-            else
-            {
-                echo    "<li>";
-            }
-
+            echo        "<li ".($i == $pagina ? "class='active'" : "").">";
             echo            "<a href='jogos.php?pagina=".$i."'>".$i."</a>";
             echo        "</li>";
         }
 
-        echo            "<li>";
-        echo                "<a href='#'>&raquo;</a>";
-        echo            "</li>";   
+        if ($pagina < $paginas)
+        {
+            echo        "<li>";
+            echo            "<a href='jogos.php?pagina=".($pagina+1)."'>&raquo;</a>";
+            echo        "</li>";  
+        }
+
         echo        "</ul>";
         echo    "</div>";
         echo "</div>";
