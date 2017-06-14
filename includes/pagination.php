@@ -36,25 +36,20 @@
     }
 
     function imprimeJogos($registros)
-    {  
-        $counter = 0;
-        foreach ($registros as $key => $value) 
+    {
+        for ($i = 0; $i < (count($registros) / 3); $i++)
         {
-            $counter++;
-            if (($counter % 3) == 0)
-            {
-               echo "<div class='row'>"; 
-            }
+            echo "<div class='row'>";
 
-            echo    "<div class='col-md-4 img-portfolio'>";
-            echo        "<a href='jogo.php?id=".$value['jogoID']."'><img class='img-responsive img-hover' src='".$value['jogoImage']."' alt='".$value['jogoName']."'></a>";
-            echo        "<h3><a href='jogo.php'>".$value['jogoName']."</a></h3>";
-            echo    "</div>";
-            
-            if (($counter % 3) == 0)
+            foreach (array_slice($registros, $i * 3, 3) as $key => $value) 
             {
-               echo "</div>";
+                echo "<div class='col-md-4 img-portfolio'>";
+                echo    "<a href='jogo.php?id=".$value['jogoID']."'><img class='img-responsive img-hover' src='".$value['jogoImage']."' alt='".$value['jogoName']."'></a>";
+                echo    "<h3><a href='jogo.php'>".$value['jogoName']."</a></h3>";
+                echo "</div>";
             }
+            
+            echo "</div>"; 
         }
     }
 
