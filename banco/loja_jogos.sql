@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 13-Jun-2017 às 07:18
+-- Generation Time: 18-Jun-2017 às 07:15
 -- Versão do servidor: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -19,6 +19,17 @@ SET time_zone = "+00:00";
 --
 -- Database: `loja_jogos`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_jogo` (IN `jogoName` VARCHAR(100), IN `jogoCategory` VARCHAR(100), IN `jogoDescription` VARCHAR(100), IN `jogoPrice` DECIMAL(10,2), IN `jogoImage` VARCHAR(100))  BEGIN
+	INSERT INTO jogos(jogoName, jogoCategory, jogoDescription, jogoPrice, jogoImage)
+	VALUES (jogoName, jogoCategory, jogoDescription, jogoPrice, jogoImage);
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -98,27 +109,6 @@ CREATE TABLE `jogos_log` (
   `newJogoPrice` decimal(10,2) DEFAULT NULL,
   `newJogoImage` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `jogos_log`
---
-
-INSERT INTO `jogos_log` (`logID`, `logData`, `evento`, `oldJogoName`, `oldJogoCategory`, `oldJogoDescription`, `oldJogoPrice`, `oldJogoImage`, `newJogoName`, `newJogoCategory`, `newJogoDescription`, `newJogoPrice`, `newJogoImage`) VALUES
-(1, '2017-06-12 11:45:46', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Final Fantasy XIV Online', 'Adventure RPG', 'FINAL FANTASY® XIV: A Realm Reborn™ is a massively multiplayer online role-playing game (MMORPG) for Windows® PC, PlayStation®3 and PlayStation®4 that invites you to explore the realm of Eorzea with friends from around the world.', '50.00', 'images/jogos/FinalFantasyXIVOnline.jpg'),
-(2, '2017-06-12 11:49:24', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Counter Strike Global Offensive', 'First Person Shooter', 'Counter-Strike: Global Offensive (CS: GO) expandirá na jogabilidade de ação baseada em equipes na qual foi pioneiro quando foi lançado há 12 anos. CS: GO contém novos mapas, personagens e armas, além de conter versões atualizadas de conteúdos do CS clássico (como de_dust).', '25.00', 'images/jogos/CounterStrikeGlobalOffensive.jpg'),
-(3, '2017-06-12 19:16:01', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Garry''s Mod', 'Simulador', 'Garry''s Mod is a physics sandbox. There aren''t any predefined aims or goals. We give you the tools and leave you to play.', '20.00', 'images/jogos/GarrysMod.jpg'),
-(4, '2017-06-12 19:17:23', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Full Throttle Remastered', 'Adventure RPG', 'Lançado pela LucasArts em 1995, Full Throttle é uma aventura gráfica clássica do lendário Tim Schafer. O jogo conta a história de Ben Throttle, o líder brigão da gangue de motoqueiros Polecats, que se vê metido em uma história de motos, massacres e morte.', '28.00', 'images/jogos/FullThrottleRemastered.jpg'),
-(5, '2017-06-12 19:18:12', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Grand Theft Auto V', 'Simulador', 'Um malandro de rua, um ladrão de bancos aposentado e um psicopata aterrorizante devem realizar uma série de golpes ousados para sobreviver em uma cidade implacável onde não podem confiar em ninguém, nem mesmo um no outro.', '100.00', NULL),
-(6, '2017-06-12 19:18:19', 'Update', 'Grand Theft Auto V', 'Simulador', 'Um malandro de rua, um ladrão de bancos aposentado e um psicopata aterrorizante devem realizar uma série de golpes ousados para sobreviver em uma cidade implacável onde não podem confiar em ninguém, nem mesmo um no outro.', '100.00', NULL, 'Grand Theft Auto V', 'Simulador', 'Um malandro de rua, um ladrão de bancos aposentado e um psicopata aterrorizante devem realizar uma série de golpes ousados para sobreviver em uma cidade implacável onde não podem confiar em ninguém, nem mesmo um no outro.', '100.00', 'images/jogos/GrandTheftAutoV.jpg'),
-(7, '2017-06-12 19:19:46', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Mount & Blade: Warband', 'Simulador', 'In a land torn asunder by incessant warfare, it is time to assemble your own band of hardened warriors and enter the fray. Lead your men into battle, expand your realm, and claim the ultimate prize: the throne of Calradia!', '30.00', 'images/jogos/MountAndBladeWarband.jpg'),
-(8, '2017-06-13 01:57:08', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Age of Empires® III: Complete Collection', 'Adventure RPG', 'Microsoft Studios brings you three epic Age of Empires III games in one monumental collection for the first time.', '70.00', 'images/jogos/AgeOfEmpiresIIICompleteCollection.jpg'),
-(9, '2017-06-13 02:01:14', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Sid Meier''s Civilization® V', 'Simulador', 'Create, discover, and download new player-created maps, scenarios, interfaces, and more!', '45.00', 'images/jogos/SidMeiersCivilizationV.jpg'),
-(10, '2017-06-13 02:02:51', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Project Zomboid', 'Simulador', 'Project Zomboid is the ultimate in zombie survival. Alone or in MP: you loot, build, craft, fight, farm and fish in a struggle to survive. A hardcore RPG skillset, a vast map, a massively customisable sandbox and a cute tutorial raccoon await the unwary. So how will you die?', '25.00', 'images/jogos/Project Zomboid.jpg'),
-(11, '2017-06-13 02:03:57', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Terraria', 'Simulador', 'Dig, fight, explore, build! Nothing is impossible in this action-packed adventure game. Four Pack also available!', '20.00', 'images/jogos/Terraria.jpg'),
-(12, '2017-06-13 02:05:29', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'L.A. Noire', 'First Person Shooter', 'L.A. Noire is a violent crime thriller that blends breathtaking action with true detective work to deliver an unprecedented interactive experience. Search for clues, chase down suspects and interrogate witnesses as you struggle to find the truth in a city where everyone has something to hide.', '30.00', 'images/jogos/LANoire.jpg'),
-(13, '2017-06-13 02:06:34', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Kerbal Space Program', 'Simulador', 'In KSP you must build a space-worthy craft, capable of flying its crew out into space without killing them. At your disposal is a collection of parts, which must be assembled to create a functional ship. Each part has its own function and will affect the way a ship flies (or doesn''t). So strap yourself in, and get ready to try some Rocket Science!', '73.00', 'images/jogos/KerbalSpaceProgram.jpg'),
-(14, '2017-06-13 02:14:07', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Rocket League®', 'Simulador', 'Soccer meets driving once again in the long-awaited, physics-based multiplayer-focused sequel to Supersonic Acrobatic Rocket-Powered Battle-Cars! Choose a variety of high-flying vehicles equipped with huge rocket boosters to score amazing aerial goals and pull-off incredible game-changing saves!', '37.00', 'images/jogos/RocketLeague.jpg'),
-(15, '2017-06-13 02:16:47', 'Inserido', NULL, NULL, NULL, NULL, NULL, 'Stardew Valley', 'Simulador', 'Você herdou a antiga fazenda do seu avô, em Stardew Valley. Com ferramentas de segunda-mão e algumas moedas, você parte para dar início a sua nova vida. Será que você vai aprender a viver da terra, a transformar esse matagal em um próspero lar?', '25.00', 'images/jogos/StardewValley.jpg');
 
 -- --------------------------------------------------------
 
@@ -201,6 +191,29 @@ CREATE TABLE `usuarios_log` (
   `newUserPassword` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_jogos`
+--
+CREATE TABLE `view_jogos` (
+`jogoID` int(11)
+,`jogoName` varchar(100)
+,`jogoCategory` varchar(100)
+,`jogoDescription` varchar(1000)
+,`jogoPrice` decimal(10,2)
+,`jogoImage` varchar(100)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_jogos`
+--
+DROP TABLE IF EXISTS `view_jogos`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_jogos`  AS  select `jogos`.`jogoID` AS `jogoID`,`jogos`.`jogoName` AS `jogoName`,`jogos`.`jogoCategory` AS `jogoCategory`,`jogos`.`jogoDescription` AS `jogoDescription`,`jogos`.`jogoPrice` AS `jogoPrice`,`jogos`.`jogoImage` AS `jogoImage` from `jogos` ;
+
 --
 -- Indexes for dumped tables
 --
@@ -249,7 +262,7 @@ ALTER TABLE `jogos`
 -- AUTO_INCREMENT for table `jogos_log`
 --
 ALTER TABLE `jogos_log`
-  MODIFY `logID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `logID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `log`
 --

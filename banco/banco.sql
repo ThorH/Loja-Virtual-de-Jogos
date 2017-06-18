@@ -42,3 +42,16 @@ create table usuarios_log (
 	newUserEmail varchar(100),
 	newUserPassword varchar(100)
 );
+
+CREATE VIEW view_jogos AS
+SELECT *
+FROM jogos;
+
+DELIMITER $$
+
+CREATE PROCEDURE insert_jogo(IN jogoName varchar(100), IN jogoCategory varchar(100), IN jogoDescription varchar(100), IN jogoPrice decimal(10,2), IN jogoImage varchar(100))
+BEGIN
+	INSERT INTO jogos(jogoName, jogoCategory, jogoDescription, jogoPrice, jogoImage)
+	VALUES (jogoName, jogoCategory, jogoDescription, jogoPrice, jogoImage);
+END $$
+DELIMITER ;

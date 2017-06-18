@@ -107,7 +107,7 @@
 				}
 
 				//executa o insert
-				$consulta = $conexao->prepare("INSERT INTO jogos (jogoName, jogoCategory, jogoDescription, jogoPrice, jogoImage) VALUES (?,?,?,?,?)");
+				$consulta = $conexao->prepare("CALL insert_jogo(?,?,?,?,?)");
 				$consulta->execute(array($jogoName, $jogoCategory, $jogoDescription, $jogoPrice, $uploadFile));
 				$resultado = $consulta->rowCount();
 
@@ -156,7 +156,7 @@
 		}
 
 		//read
-		$consulta = $conexao->prepare("SELECT * FROM jogos");
+		$consulta = $conexao->prepare("SELECT * FROM view_jogos");
 		$consulta->execute();
 		$registros = $consulta->fetchAll();
 	?>
