@@ -45,7 +45,7 @@
             {
                 echo "<div class='col-md-4 img-portfolio'>";
                 echo    "<a href='jogo.php?id=".$value['jogoID']."'><img class='img-responsive img-hover' src='".$value['jogoImage']."' alt='".$value['jogoName']."'></a>";
-                echo    "<h3><a href='jogo.php'>".$value['jogoName']."</a></h3>";
+                echo    "<h3><a href='jogo.php?id=".$value['jogoID']."'>".$value['jogoName']."</a></h3>";
                 echo "</div>";
             }
             
